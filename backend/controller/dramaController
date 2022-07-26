@@ -4,9 +4,21 @@ const watcher = require('../interface/IWatcher');
 
 exports.getDrama = catchAsync(async(req, res, next) => {
 
-    newDrama = new Drama(req.body.title, req.body.country, req.body.episodes, req.body.duration, req.body.genres);
+    // newDrama = new drama(req.body.title, req.body.country, req.body.episodes, req.body.duration, req.body.genres);
 
-    var result = await watcher.getDrama(newDrama);
+    var result = await watcher.getDrama();
+
+    res.status(200).send({
+        success: true,
+        payload: result
+    });
+});
+
+exports.addDrama = catchAsync(async(req, res, next) => {
+
+    newDrama = new drama(req.body.title, req.body.country, req.body.episodes, req.body.duration, req.body.genres);
+
+    var result = await watcher.addDrama(newDrama);
 
     res.status(200).send({
         success: true,

@@ -8,6 +8,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.use('/home', watcher);
+app.use('/', watcher);
+app.use('/add', watcher);
+app.use('/get', watcher);
 
 module.exports = app;
