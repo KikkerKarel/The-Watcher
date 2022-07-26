@@ -1,17 +1,20 @@
-import { View, Text, StyleSheet, Button } from 'react-native';
-import { NavigationContainer } from "@react-navigation/native"
+import { Text, StyleSheet, Button, Image, View, Pressable, TouchableOpacity } from 'react-native';
+import { DarkTheme, NavigationContainer } from "@react-navigation/native"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import ListScreen from './components/List/List';
+import AddEvent from './components/Add/AddEvent';
 
 
-const MenuScreen = ({ navigation }) => {
+const HomeScreen = ({ navigation }) => {
   return (
-    <Button
-      title='Go to Menu'
-      onPress={() => {
-        navigation.navigate('Test', { text: 'Test screen'})
-      }}
-    />
+    <View style={styles.container}>
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('List')}>
+        <Text style={styles.text}>List</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Add')}>
+        <Text style={styles.text}>Add</Text>
+      </TouchableOpacity>
+    </View>
   )
 }
 
@@ -23,10 +26,11 @@ const App = () => {
   const Stack = createNativeStackNavigator();
 
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={DarkTheme}>
       <Stack.Navigator>
-        <Stack.Screen name="Menu" component={MenuScreen} />
-        <Stack.Screen name="Test" component={TestScreen} />
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="List" component={ListScreen} />
+        <Stack.Screen name="Add" component={AddEvent} />
       </Stack.Navigator>
     </NavigationContainer>
   )
@@ -36,13 +40,19 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#121212',
     flex: 1,
-    justifyContent: 'center',
+    // justifyContent: 'center',
     alignItems: 'center',
+  },
+  button: {
+    color: 'white',
+    marginTop: '15%',
+
   },
   text: {
     color: 'white',
-
+    fontSize: 30
   }
 });
 
 export default App;
+
