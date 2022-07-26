@@ -7,7 +7,7 @@ export default function AddEvent() {
     const list = ['Title', 'Country', 'Episodes', 'Duration', 'Genres'];
     const [title, changeTitle] = React.useState("");
     const [country, changeCountry] = React.useState("");
-    const [episodes, changeEpisodes] = React.useState(6);
+    const [episodes, changeEpisodes] = React.useState(0);
     const [duration, changeDuration] = React.useState(0);
     const [genres, changeGenres] = React.useState([""]);
 
@@ -48,35 +48,35 @@ export default function AddEvent() {
             <Text style={styles.text}>Title</Text>
             <TextInput
                 style={styles.textInput}
-                onChange={changeTitle}
+                onChangeText={changeTitle}
                 value={title}
             />
             <Text style={styles.text}>Country</Text>
             <TextInput
                 style={styles.textInput}
-                onChange={changeCountry}
+                onChangeText={changeCountry}
                 value={country}
             />
             <Text style={styles.text}>Episodes</Text>
             <TextInput
                 style={styles.textInput}
-                onChange={changeEpisodes}
+                onChangeText={changeEpisodes}
                 value={episodes.toString()}
             />
             <Text style={styles.text}>Duration</Text>
             <TextInput
                 style={styles.textInput}
-                onChange={changeDuration}
+                onChangeText={changeDuration}
                 value={duration.toString()}
             />
             <Text style={styles.text}>Genres</Text>
             <TextInput
                 style={styles.textInput}
-                onChange={changeGenres}
+                onChangeText={changeGenres}
                 value={genres}
             />
             <TouchableOpacity style={styles.button} onPress={AddToList}>
-
+                <Text>Add</Text>
             </TouchableOpacity>
         </SafeAreaView>
     )
@@ -104,5 +104,10 @@ const styles = StyleSheet.create({
         fontSize: 25,
         fontWeight: 'bold',
         // left: 10
+    },
+    button: {
+        color: 'white',
+        backgroundColor: 'white',
+        marginTop: '2%'
     }
 })

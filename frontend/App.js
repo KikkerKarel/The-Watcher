@@ -3,6 +3,7 @@ import { DarkTheme, NavigationContainer } from "@react-navigation/native"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import ListScreen from './components/List/List';
 import AddEvent from './components/Add/AddEvent';
+import axios from 'axios';
 
 
 const HomeScreen = ({ navigation }) => {
@@ -23,6 +24,7 @@ const TestScreen = ({ navigation, route }) => {
 }
 
 const App = () => {
+  axios.defaults.baseURL = "http://192.168.178.227:5000";
   const Stack = createNativeStackNavigator();
 
   return (
