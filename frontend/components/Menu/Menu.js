@@ -1,27 +1,23 @@
-// import { Component } from "react";
-// import { StyleSheet, Text, View } from 'react-native';
-// import { Header } from 'react-native-elements';
-// import { Left, Right, Icon } from 'native-base';
+import { NavigationContainer } from "@react-navigation/native"
+import { createNativeStackNavigator } from "@react-navigation/native-stack"
+import ListScreen from "../List/List";
+import HomeScreen from "../../App";
 
-// class Menu extends Component {
-//     render() {
-//         return (
-//             <View style={styles.container}>
-//                 <Header
-//                     leftComponent={<Icon name='menu' onPress={() => this.props.navigation.openDrawer() } />}
-//                 />
-//                 <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-//                     <Text>Home Page</Text>
-//                 </View>
-//           </View> 
-//         )
-//     }
-// }
+const Stack = createNativeStackNavigator();
 
-// const styles = StyleSheet.create({
-//     container: {
-//         flex: 1
-//     }
-// });
+const Menu = () => {
+    return (
+        <NavigationContainer>
+            <Stack.Navigator>
+                <Stack.Screen
+                    name="home"
+                    component={HomeScreen}
+                    options={{ title: 'Welcome'}}
+                />
+                <Stack.Screen name="List" component={ListScreen} />
+            </Stack.Navigator>
+        </NavigationContainer>
+    )
+}
 
-// export default Menu;
+export default Menu;

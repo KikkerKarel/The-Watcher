@@ -42,7 +42,7 @@ var dramas = [
     },
 ]
 
-export default function ListPage() {
+export default function ListScreen() {
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView>
