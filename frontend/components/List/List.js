@@ -1,87 +1,71 @@
+import axios from "axios";
+import React, { useEffect } from "react";
 import { View, Text, StyleSheet, ScrollView, SafeAreaView } from "react-native";
 
 var countries = [
     {
-        country: 'Korean'
+        country: 'South Korea'
     },
     {
-        country: 'Chinese'
+        country: 'China'
     },
     {
-        country: 'Japanese'
+        country: 'Japan'
     },
     {
-        country: 'Taiwanese'
+        country: 'Taiwan'
     },
     {
-        country: 'Thai'
+        country: 'Thailand'
     },
 ];
 
-var dramas = [
-    {
-        title: 'Remarriage & desires',
-        country: 'South-Korea',
-        episodes: '8',
-        duration: '60 min',
-        genres: ['Drama', 'Melodrama']
-    },
-    {
-        title: 'Doctor Stranger',
-        country: 'South-Korea',
-        episodes: '20',
-        duration: '60 min',
-        genres: ['Thriller', 'Romance', 'Drama', 'Medical']
-    },
-    {
-        title: 'Descendants of the Sun',
-        country: 'South-Korea',
-        episodes: '16',
-        duration: '60 min',
-        genres: ['Action', 'Comedy', 'Romance', 'Melodrama']
-    },
-]
-
 export default function ListScreen() {
+
+    useEffect(() => {
+        loadOnlyOnce();
+    }, []);
+
+    const [dramas, setDramas] = React.useState([]);
+
+    const loadOnlyOnce = () => {
+        axios.get("/get").then(response => {
+            setDramas(response.data.payload);
+        });
+    }
+
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView>
                 {countries.map((country) => {
                     return (
-                        <View style={styles.scroll}>
+                        <View style={styles.scroll} key={country.country}>
                             <Text style={styles.header}>{country.country}</Text>
-                            <ScrollView style={styles.scrollview}>
-                                {dramas.map((drama) => {
+                            {dramas.map((drama) => {
+                                if (country.country === drama.country)
                                     return (
-                                        <View>
-                                            <Text style={styles.text}>Title: {drama.title}</Text>
-                                            <Text style={styles.text}>Country: {drama.country}</Text>
-                                            <Text style={styles.text}>Episodes: {drama.episodes}</Text>
-                                            <Text style={styles.text}>Duration: {drama.duration}</Text>
-                                            <Text style={styles.text}>Genres: {drama.genres}</Text>
+                                        <View style={[styles.scrollview, styles.shadowProp]} key={drama.title}>
+                                            <View style={{ flex: 1 }}>
+                                                <Text style={styles.text}>Title: {drama.title}</Text>
+                                                <Text style={styles.text}>Country: {drama.country}</Text>
+                                                <Text style={styles.text}>Episodes: {drama.episodes}</Text>
+                                                <Text style={styles.text}>Duration: {drama.duration} min</Text>
+                                                <Text style={styles.text}>Genres: {drama.genres}</Text>
+                                            </View>
+                                            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                                                <Text style={styles.score}>{
+                                                    drama.score !== null ? (
+                                                        drama.score
+                                                    ) : "N/A"
+                                                }</Text>
+                                            </View>
                                         </View>
                                     )
-                                })}
-                            </ScrollView>
+                            })}
                         </View>
                     )
                 })}
             </ScrollView>
-
-            {/* <View style={styles.scroll}>
-                <Text style={styles.header}>Korean</Text>
-                <ScrollView style={styles.scrollview}>
-                    <Text style={styles.text}>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                        eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                        minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                        aliquip ex ea commodo consequat. Duis aute irure dolor in
-                        reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                        pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                        culpa qui officia deserunt mollit anim id est laborum.
-                    </Text>
-                </ScrollView>
-            </View> */}
         </SafeAreaView>
     )
 }
@@ -96,13 +80,18 @@ const styles = StyleSheet.create({
         top: 10,
         marginTop: '5%',
         width: 400,
-        height: 150,
+        // height: 150,
     },
     scrollview: {
+        flexDirection: 'row',
         backgroundColor: '#8A0707',
         borderRadius: 12,
         overflow: 'hidden',
-        textAlign: 'center'
+        textAlign: 'center',
+        marginTop: '2%',
+        borderStyle: 'solid',
+        borderWidth: '1px',
+        borderColor: '#fff',
     },
     header: {
         color: '#fff',
@@ -113,5 +102,17 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontSize: 15,
         left: 10
+    },
+    shadowProp: {
+        shadowColor: 'white',
+        shadowOffset: { width: -2, height: 4 },
+        shadowOpacity: 1,
+        shadowRadius: 3,
+        elevation: 20
+    },
+    score: {
+        color: '#fff',
+        fontSize: 20,
+        fontWeight: 'bold',
     }
 });

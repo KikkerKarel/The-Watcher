@@ -1,50 +1,40 @@
 import React from "react";
-import { Button, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import axios from "axios";
+import { Picker } from "@react-native-picker/picker";
+import { ScrollView } from "react-native-gesture-handler";
+
+
+const scoreList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
 export default function AddEvent() {
 
-    const list = ['Title', 'Country', 'Episodes', 'Duration', 'Genres'];
     const [title, changeTitle] = React.useState("");
     const [country, changeCountry] = React.useState("");
-    const [episodes, changeEpisodes] = React.useState(0);
-    const [duration, changeDuration] = React.useState(0);
+    const [episodes, changeEpisodes] = React.useState();
+    const [duration, changeDuration] = React.useState();
     const [genres, changeGenres] = React.useState([""]);
+
+    const [selectedValue, setSelectedValue] = React.useState(0);
 
     const json = JSON.stringify({
         title: title,
         country: country,
-        episodes: episodes,
-        duration: duration,
-        genres: genres
+        episodes: parseInt(episodes),
+        duration: parseInt(duration),
+        genres: genres,
+        score: selectedValue
     });
 
     const AddToList = () => {
-        axios.post("/add", json, {headers: { 'Content-Type': 'application/json'}}).then(response => {
-            console.log(response);
-        });
+        // axios.post("/add", json, { headers: { 'Content-Type': 'application/json' } }).then(response => {
+        //     console.log(response.data);
+        // });
+        console.log(json);
     }
-
-    // const onChange = (e) => {
-    //     console.log(e.target.getAttribute("data-key"));
-    // }
 
     return (
         <SafeAreaView style={styles.container}>
-            {/* {list.map((item) => {
-                return (
-                    <View style={styles.view}>
-                        <Text style={styles.text}>{item}</Text>
-                        <TextInput
-                            key={item}
-                            style={styles.textInput}
-                            onChangeText={onChangeText}
-                            onSubmitEditing={onChange}
-                            value={text}
-                        />
-                    </View>
-                )
-            })} */}
             <Text style={styles.text}>Title</Text>
             <TextInput
                 style={styles.textInput}
@@ -61,13 +51,13 @@ export default function AddEvent() {
             <TextInput
                 style={styles.textInput}
                 onChangeText={changeEpisodes}
-                value={episodes.toString()}
+                value={episodes}
             />
             <Text style={styles.text}>Duration</Text>
             <TextInput
                 style={styles.textInput}
                 onChangeText={changeDuration}
-                value={duration.toString()}
+                value={duration}
             />
             <Text style={styles.text}>Genres</Text>
             <TextInput
@@ -75,9 +65,25 @@ export default function AddEvent() {
                 onChangeText={changeGenres}
                 value={genres}
             />
+
+            <Text style={styles.text}>Score</Text>
+            <Picker
+                selectedValue={selectedValue}
+                style={styles.picker}
+                onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
+            >
+                {scoreList.map((score) => {
+                    return (
+                        <Picker.Item label={score.toString()} value={score} key={score} />
+                    )
+                })}
+            </Picker>
+
+
             <TouchableOpacity style={styles.button} onPress={AddToList}>
-                <Text>Add</Text>
+                <Text style={styles.buttonText}>Add</Text>
             </TouchableOpacity>
+
         </SafeAreaView>
     )
 }
@@ -88,26 +94,41 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         // justifyContent: 'center'
     },
-    view: {
-        width: '75%',
-        marginTop: '10%'
-    },
     textInput: {
         backgroundColor: 'white',
         borderRadius: 15,
         height: 30,
-        width: '75%',
+        width: '60%',
         justifyContent: 'center',
     },
     text: {
         color: 'white',
         fontSize: 25,
         fontWeight: 'bold',
+        marginTop: '5%'
         // left: 10
+    },
+    picker: {
+        color: 'white',
+        backgroundColor: '#fff',
+        height: 100,
+        overflow: 'hidden',
+        width: '60%',
+        borderRadius: 15,
+        justifyContent: 'center'
     },
     button: {
         color: 'white',
         backgroundColor: 'white',
-        marginTop: '2%'
+        marginTop: '10%',
+        width: '30%',
+        height: 40,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 15
+    },
+    buttonText: {
+        fontSize: '25px',
+        fontWeight: 'bold',
     }
 })

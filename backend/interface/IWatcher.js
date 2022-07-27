@@ -6,8 +6,12 @@ let connection = sql.connect(config);
 var request = new sql.Request();
 
 exports.getDrama = async () => {
-    const result = await (await request.query(`SELECT * FROM Drama`)).recordsets;
+    var dramas = await (await request.query(`SELECT * FROM Drama`)).recordsets;
     
+    var result;
+    dramas.forEach((element) => {
+        result = element;
+    });
     return result;
 }
 
