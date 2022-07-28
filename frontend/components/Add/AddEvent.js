@@ -1,8 +1,7 @@
 import React from "react";
-import { SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity } from "react-native";
 import axios from "axios";
 import { Picker } from "@react-native-picker/picker";
-import { ScrollView } from "react-native-gesture-handler";
 
 
 const scoreList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -27,10 +26,9 @@ export default function AddEvent() {
     });
 
     const AddToList = () => {
-        // axios.post("/add", json, { headers: { 'Content-Type': 'application/json' } }).then(response => {
-        //     console.log(response.data);
-        // });
-        console.log(json);
+        axios.post("/add", json, { headers: { 'Content-Type': 'application/json' } }).then(response => {
+            console.log(response.data);
+        });
     }
 
     return (
@@ -92,7 +90,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-        // justifyContent: 'center'
     },
     textInput: {
         backgroundColor: 'white',
@@ -106,7 +103,6 @@ const styles = StyleSheet.create({
         fontSize: 25,
         fontWeight: 'bold',
         marginTop: '5%'
-        // left: 10
     },
     picker: {
         color: 'white',

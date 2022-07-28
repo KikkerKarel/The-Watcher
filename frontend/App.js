@@ -1,4 +1,4 @@
-import { Text, StyleSheet, Button, Image, View, Pressable, TouchableOpacity } from 'react-native';
+import { Text, StyleSheet, View, TouchableOpacity } from 'react-native';
 import { DarkTheme, NavigationContainer } from "@react-navigation/native"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import ListScreen from './components/List/List';
@@ -17,10 +17,6 @@ const HomeScreen = ({ navigation }) => {
       </TouchableOpacity>
     </View>
   )
-}
-
-const TestScreen = ({ navigation, route }) => {
-  return <Text>This is {route.params.text}</Text>
 }
 
 const App = () => {
@@ -42,7 +38,6 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#121212',
     flex: 1,
-    // justifyContent: 'center',
     alignItems: 'center',
   },
   button: {
