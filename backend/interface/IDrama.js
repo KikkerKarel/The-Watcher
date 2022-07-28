@@ -1,4 +1,3 @@
-const { default: axios} = require('axios');
 const config = require('../util/db_connection');
 const sql = require('mssql');
 

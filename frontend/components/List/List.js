@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect } from "react";
 import { View, Text, StyleSheet, ScrollView, SafeAreaView, TouchableOpacity } from "react-native";
+import { styles } from "./ListStyles";
 
 var countries = [
     {
@@ -20,8 +21,6 @@ var countries = [
     },
 ];
 
-const dataHeaders = ['#', 'Title', 'Score'];
-
 export default function ListScreen() {
 
     useEffect(() => {
@@ -31,7 +30,7 @@ export default function ListScreen() {
     const [dramas, setDramas] = React.useState([]);
 
     const loadOnlyOnce = () => {
-        axios.get("/get").then(response => {
+        axios.get("/drama/get").then(response => {
             setDramas(response.data.payload);
         });
     }
@@ -81,28 +80,14 @@ export default function ListScreen() {
                                                     ) : "N/A"
                                                 }</Text>
                                             </View>
-                                            {/* {open ? (
-                                                <View>
-                                                    <Text style={styles.text}>Title: {drama.title}</Text>
-                                                    <Text style={styles.text}>Country: {drama.country}</Text>
-                                                    <Text style={styles.text}>Episodes: {drama.episodes}</Text>
-                                                    <Text style={styles.text}>Duration: {drama.duration} min</Text>
-                                                    <Text style={styles.text}>Genres: {drama.genres}</Text>
-                                                </View>
-                                            ) : null} */}
+                                            {open ? (
+                                                drama.title === key.title ? (
+                                                    additionalInfo
+                                                ): null
+                                            ) : null}
                                         </TouchableOpacity>
                                     )
                             })}
-                            {open ? (
-                                // <View>
-                                //     <Text style={styles.text}>Title: {drama.title}</Text>
-                                //     <Text style={styles.text}>Country: {drama.country}</Text>
-                                //     <Text style={styles.text}>Episodes: {drama.episodes}</Text>
-                                //     <Text style={styles.text}>Duration: {drama.duration} min</Text>
-                                //     <Text style={styles.text}>Genres: {drama.genres}</Text>
-                                // </View>
-                                additionalInfo
-                            ) : null}
                         </View>
                     )
                 })}
@@ -110,76 +95,3 @@ export default function ListScreen() {
         </SafeAreaView>
     )
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: 'center',
-    },
-    scroll: {
-        top: 10,
-        marginTop: '5%',
-        width: 400,
-    },
-    scrollview: {
-        flexDirection: 'column',
-        backgroundColor: '#4A0000',
-        // borderRadius: 12,
-        overflow: 'hidden',
-        textAlign: 'center',
-        // marginTop: '2%',
-        borderStyle: 'solid',
-        borderWidth: '1px',
-        // borderColor: '#fff',
-        borderBottomColor: '#fff',
-
-    },
-    header: {
-        color: '#fff',
-        marginLeft: '2%',
-        fontSize: 25,
-    },
-    text: {
-        color: '#fff',
-        fontSize: 15,
-        left: 10
-    },
-    shadowProp: {
-        shadowColor: 'white',
-        shadowOffset: { width: -2, height: 4 },
-        shadowOpacity: 1,
-        shadowRadius: 3,
-        elevation: 20
-    },
-    score: {
-        color: '#fff',
-        fontSize: 20,
-        fontWeight: 'bold',
-    },
-
-    row: {
-        flexDirection: 'row',
-        flex: 1,
-        justifyContent: 'space-between',
-        alignItems: 'center'
-    },
-    rowHeight: {
-        height: 40
-    },
-    tableText: {
-        color: '#fff',
-        fontSize: 15,
-    },
-    title: {
-        width: '70%',
-    },
-    rest: {
-        width: '15%',
-        textAlign: 'center'
-    },
-    borderBottom: {
-        borderBottomColor: '#fff',
-        borderStyle: 'solid',
-        borderBottomWidth: '1px'
-    }
-});

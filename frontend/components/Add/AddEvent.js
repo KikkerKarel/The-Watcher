@@ -2,6 +2,7 @@ import React from "react";
 import { SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity } from "react-native";
 import axios from "axios";
 import { Picker } from "@react-native-picker/picker";
+import { styles } from "./AddEventStyles";
 
 
 const scoreList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -26,7 +27,7 @@ export default function AddEvent() {
     });
 
     const AddToList = () => {
-        axios.post("/add", json, { headers: { 'Content-Type': 'application/json' } }).then(response => {
+        axios.post("/drama/add", json, { headers: { 'Content-Type': 'application/json' } }).then(response => {
             console.log(response.data);
         });
     }
@@ -85,46 +86,3 @@ export default function AddEvent() {
         </SafeAreaView>
     )
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: 'center',
-    },
-    textInput: {
-        backgroundColor: 'white',
-        borderRadius: 15,
-        height: 30,
-        width: '60%',
-        justifyContent: 'center',
-    },
-    text: {
-        color: 'white',
-        fontSize: 25,
-        fontWeight: 'bold',
-        marginTop: '5%'
-    },
-    picker: {
-        color: 'white',
-        backgroundColor: '#fff',
-        height: 100,
-        overflow: 'hidden',
-        width: '60%',
-        borderRadius: 15,
-        justifyContent: 'center'
-    },
-    button: {
-        color: 'white',
-        backgroundColor: 'white',
-        marginTop: '10%',
-        width: '30%',
-        height: 40,
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 15
-    },
-    buttonText: {
-        fontSize: '25px',
-        fontWeight: 'bold',
-    }
-})
