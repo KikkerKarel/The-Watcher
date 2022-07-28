@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect } from "react";
-import { View, Text, StyleSheet, ScrollView, SafeAreaView } from "react-native";
+import { View, Text, StyleSheet, ScrollView, SafeAreaView, TouchableOpacity } from "react-native";
 
 var countries = [
     {
@@ -20,6 +20,8 @@ var countries = [
     },
 ];
 
+const dataHeaders = ['#', 'Title', 'Score'];
+
 export default function ListScreen() {
 
     useEffect(() => {
@@ -34,6 +36,26 @@ export default function ListScreen() {
         });
     }
 
+    const [open, setOpen] = React.useState(false);
+    const [key, setKey] = React.useState([]);
+    const openInfo = (event) => {
+        console.log(event);
+        setOpen(!open);
+        dramas.forEach(item => {
+            if (item.title === event) {
+                setKey(item);
+            }
+        });
+    }
+
+    let additionalInfo =
+    <View>
+        <Text style={styles.text}>Country: {key.country}</Text>
+        <Text style={styles.text}>Episodes: {key.episodes}</Text>
+        <Text style={styles.text}>Duration: {key.duration} min</Text>
+        <Text style={styles.text}>Genres: {key.genres}</Text>
+    </View>;
+
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView>
@@ -41,27 +63,46 @@ export default function ListScreen() {
                     return (
                         <View style={styles.scroll} key={country.country}>
                             <Text style={styles.header}>{country.country}</Text>
-                            {dramas.map((drama) => {
+                            <View style={[styles.row, styles.borderBottom]}>
+                                <Text style={[styles.tableText, styles.rest]}>#</Text>
+                                <Text style={[styles.tableText, styles.title]}>Title</Text>
+                                <Text style={[styles.tableText, styles.rest]}>Score</Text>
+                            </View>
+                            {dramas.map((drama, index) => {
                                 if (country.country === drama.country)
                                     return (
-                                        <View style={[styles.scrollview, styles.shadowProp]} key={drama.title}>
-                                            <View style={{ flex: 1 }}>
-                                                <Text style={styles.text}>Title: {drama.title}</Text>
-                                                <Text style={styles.text}>Country: {drama.country}</Text>
-                                                <Text style={styles.text}>Episodes: {drama.episodes}</Text>
-                                                <Text style={styles.text}>Duration: {drama.duration} min</Text>
-                                                <Text style={styles.text}>Genres: {drama.genres}</Text>
-                                            </View>
-                                            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                                                <Text style={styles.score}>{
+                                        <TouchableOpacity style={[styles.scrollview, styles.shadowProp]} key={drama.title} onLongPress={() => openInfo(drama.title)}>
+                                            <View style={[styles.row, styles.rowHeight]}>
+                                                <Text style={[styles.tableText, styles.rest]}>{index + 1}</Text>
+                                                <Text style={[styles.tableText, styles.title]}>{drama.title}</Text>
+                                                <Text style={[styles.score, styles.rest]}>{
                                                     drama.score !== null ? (
                                                         drama.score
                                                     ) : "N/A"
                                                 }</Text>
                                             </View>
-                                        </View>
+                                            {/* {open ? (
+                                                <View>
+                                                    <Text style={styles.text}>Title: {drama.title}</Text>
+                                                    <Text style={styles.text}>Country: {drama.country}</Text>
+                                                    <Text style={styles.text}>Episodes: {drama.episodes}</Text>
+                                                    <Text style={styles.text}>Duration: {drama.duration} min</Text>
+                                                    <Text style={styles.text}>Genres: {drama.genres}</Text>
+                                                </View>
+                                            ) : null} */}
+                                        </TouchableOpacity>
                                     )
                             })}
+                            {open ? (
+                                // <View>
+                                //     <Text style={styles.text}>Title: {drama.title}</Text>
+                                //     <Text style={styles.text}>Country: {drama.country}</Text>
+                                //     <Text style={styles.text}>Episodes: {drama.episodes}</Text>
+                                //     <Text style={styles.text}>Duration: {drama.duration} min</Text>
+                                //     <Text style={styles.text}>Genres: {drama.genres}</Text>
+                                // </View>
+                                additionalInfo
+                            ) : null}
                         </View>
                     )
                 })}
@@ -74,29 +115,29 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-        // justifyContent: 'center',
     },
     scroll: {
         top: 10,
         marginTop: '5%',
         width: 400,
-        // height: 150,
     },
     scrollview: {
-        flexDirection: 'row',
-        backgroundColor: '#8A0707',
-        borderRadius: 12,
+        flexDirection: 'column',
+        backgroundColor: '#4A0000',
+        // borderRadius: 12,
         overflow: 'hidden',
         textAlign: 'center',
-        marginTop: '2%',
+        // marginTop: '2%',
         borderStyle: 'solid',
         borderWidth: '1px',
-        borderColor: '#fff',
+        // borderColor: '#fff',
+        borderBottomColor: '#fff',
+
     },
     header: {
         color: '#fff',
-        left: 10,
-        fontSize: 25
+        marginLeft: '2%',
+        fontSize: 25,
     },
     text: {
         color: '#fff',
@@ -114,5 +155,31 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontSize: 20,
         fontWeight: 'bold',
+    },
+
+    row: {
+        flexDirection: 'row',
+        flex: 1,
+        justifyContent: 'space-between',
+        alignItems: 'center'
+    },
+    rowHeight: {
+        height: 40
+    },
+    tableText: {
+        color: '#fff',
+        fontSize: 15,
+    },
+    title: {
+        width: '70%',
+    },
+    rest: {
+        width: '15%',
+        textAlign: 'center'
+    },
+    borderBottom: {
+        borderBottomColor: '#fff',
+        borderStyle: 'solid',
+        borderBottomWidth: '1px'
     }
 });
