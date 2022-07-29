@@ -12,7 +12,7 @@ export default function LoginScreen({ navigation }) {
 
     const onPress = async () => {
         await AuthService.login(username, password).then(data => {
-            console.log(data.data);
+            console.log(data);
             setRedirect(true);
         });
 

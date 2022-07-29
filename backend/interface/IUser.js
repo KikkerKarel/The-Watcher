@@ -37,15 +37,17 @@ exports.register = async (user) => {
 exports.login = async (user) => {
 
     const userDetails = (await request.query(`SELECT * FROM Profile WHERE username='${user.username}'`)).recordset[0];
-    const result = await bcrypt.compareSync(user.password, userDetails.passwordHash);
+    const response = await bcrypt.compareSync(user.password, userDetails.passwordHash);
 
-    if(result) {
+    var result = [];
+    if(response) {
         const token = jwt.sign({"username": user.username}, key.jwtKey, {
             algorithm: "HS256",
             expiresIn: "1d"
         });
         console.log(token);
-        return token;
+        result.push({token: token, userId: userDetails.Id});
+        return result[0];
     }
     return "username or password incorrect";
 

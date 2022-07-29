@@ -14,7 +14,7 @@ exports.getDrama = catchAsync(async(req, res, next) => {
 
 exports.addDrama = catchAsync(async(req, res, next) => {
 
-    newDrama = new Drama(null, req.body.userId, req.body.title, req.body.country, req.body.episodes, req.body.duration, req.body.genres);
+    newDrama = new Drama(null, req.body.userId, req.body.title, req.body.country, req.body.episodes, req.body.duration, req.body.genres, req.body.score);
 
     var result = await IDrama.addDrama(newDrama);
 

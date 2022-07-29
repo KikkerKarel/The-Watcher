@@ -1,14 +1,16 @@
-import React from "react";
-import { SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity } from "react-native";
+import React, { useEffect } from "react";
+import { Alert, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity } from "react-native";
 import axios from "axios";
 import { Picker } from "@react-native-picker/picker";
 import { styles } from "./AddEventStyles";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 const scoreList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-export default function AddEvent() {
+export default function AddEvent({ navigation }) {
 
+    const [userId, setUserId] = React.useState("");
     const [title, changeTitle] = React.useState("");
     const [country, changeCountry] = React.useState("");
     const [episodes, changeEpisodes] = React.useState();
@@ -17,16 +19,24 @@ export default function AddEvent() {
 
     const [selectedValue, setSelectedValue] = React.useState(0);
 
-    const json = JSON.stringify({
-        title: title,
-        country: country,
-        episodes: parseInt(episodes),
-        duration: parseInt(duration),
-        genres: genres,
-        score: selectedValue
-    });
+    useEffect(() => {
+        loadOnlyOnce();
+    }, []);
+
+    const loadOnlyOnce = async () => {
+        setUserId(await AsyncStorage.getItem("userId"));
+    }
 
     const AddToList = () => {
+        const json = JSON.stringify({
+            userId: parseInt(userId),
+            title: title,
+            country: country,
+            episodes: parseInt(episodes),
+            duration: parseInt(duration),
+            genres: genres,
+            score: selectedValue
+        });
         axios.post("/drama/add", json, { headers: { 'Content-Type': 'application/json' } }).then(response => {
             console.log(response.data);
         });

@@ -6,7 +6,8 @@ class Authservice {
         const response = await axios
         .post("/user/login", { username, password });
         if (response.status === 200 && response.data.payload) {
-            await AsyncStorage.setItem("token", response.data.payload);
+            await AsyncStorage.setItem("token", response.data.payload.token);
+            await AsyncStorage.setItem("userId", response.data.payload.userId.toString());
             console.log("Set token!");
             return await AsyncStorage.getItem("token");
         }

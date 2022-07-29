@@ -1,6 +1,6 @@
 import axios from "axios";
-import React, { useEffect } from "react";
-import { View, Text, ScrollView, SafeAreaView, TouchableOpacity } from "react-native";
+import React, { useCallback, useEffect } from "react";
+import { View, Text, ScrollView, SafeAreaView, TouchableOpacity, RefreshControl } from "react-native";
 import { styles } from "./ListStyles";
 
 var countries = [
@@ -21,10 +21,20 @@ var countries = [
     },
 ];
 
+const wait = (timeout) => {
+    return new Promise(resolve => setTimeout(resolve, timeout));
+}
+
 export default function ListScreen() {
 
     useEffect(() => {
         loadOnlyOnce();
+    }, []);
+
+    const [refreshing, setRefreshing] = React.useState(false);
+    const onRefresh = useCallback(() => {
+        setRefreshing(true);
+        wait(2000).then(() => setRefreshing(false));
     }, []);
 
     const [dramas, setDramas] = React.useState([]);
@@ -40,7 +50,7 @@ export default function ListScreen() {
     const openInfo = (event) => {
         setOpen(!open);
         dramas.forEach(item => {
-            if (item.title === event) {
+            if (item.Id === event) {
                 setKey(item);
             }
         });
@@ -56,7 +66,8 @@ export default function ListScreen() {
 
     return (
         <SafeAreaView style={styles.container}>
-            <ScrollView>
+            <ScrollView refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor='#fff' colors={'#fff'} />}>
                 {countries.map((country) => {
                     return (
                         <View style={styles.scroll} key={country.country}>
@@ -69,7 +80,7 @@ export default function ListScreen() {
                             {dramas.map((drama, index) => {
                                 if (country.country === drama.country)
                                     return (
-                                        <TouchableOpacity style={[styles.scrollview, styles.shadowProp]} key={drama.title} onLongPress={() => openInfo(drama.title)}>
+                                        <TouchableOpacity style={[styles.scrollview, styles.shadowProp]} key={drama.Id} onLongPress={() => openInfo(drama.Id)}>
                                             <View style={[styles.row, styles.rowHeight]}>
                                                 <Text style={[styles.tableText, styles.rest]}>{index + 1}</Text>
                                                 <Text style={[styles.tableText, styles.title]}>{drama.title}</Text>
@@ -80,7 +91,7 @@ export default function ListScreen() {
                                                 }</Text>
                                             </View>
                                             {open ? (
-                                                drama.title === key.title ? (
+                                                drama.Id === key.Id ? (
                                                     additionalInfo
                                                 ): null
                                             ) : null}
