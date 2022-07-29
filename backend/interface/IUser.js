@@ -27,12 +27,8 @@ exports.register = async (user) => {
                 result = false;
             }
         });
-    } else {
-        result = true;
     }
-    // if (result) {
-    //     await request.query(`INSERT INTO Profile (username, passwordHash) VALUES ('${user.username}', '${passwordHash}')`);
-    // }
+    await request.query(`INSERT INTO Profile (username, passwordHash) VALUES ('${user.username}', '${passwordHash}')`);
 
     return result;
 }

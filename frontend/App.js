@@ -1,55 +1,59 @@
-import { Text, StyleSheet, View, TouchableOpacity } from 'react-native';
+import 'react-native-gesture-handler';
+import { StyleSheet } from 'react-native';
 import { DarkTheme, NavigationContainer } from "@react-navigation/native"
-import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import ListScreen from './components/List/List';
 import AddEvent from './components/Add/AddEvent';
 import axios from 'axios';
+import LoginScreen from './components/Auth/Login';
+import React, { useEffect } from 'react';
+import AuthService from './authentication/Auth.Service';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 
-
-const HomeScreen = ({ navigation }) => {
-  return (
-    <View style={styles.container}>
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('List')}>
-        <Text style={styles.text}>To List</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Add')}>
-        <Text style={styles.text}>+ Entry</Text>
-      </TouchableOpacity>
-    </View>
-  )
-}
+const Drawer = createDrawerNavigator();
 
 const App = () => {
+
+  // const [loggedIn, setIsLoggedIn] = React.useState(false);
+  // const [modalVisible, setModalVisible] = React.useState(false);
+
+  // useEffect(() => {
+  //   loadOnlyOnce();
+  // }, []);
+
+  // const loadOnlyOnce = async () => {
+  //   if (await AuthService.isLoggedIn()) {
+  //     setIsLoggedIn(true);
+  //   }
+  // }
   axios.defaults.baseURL = "http://192.168.178.227:5000";
-  const Stack = createNativeStackNavigator();
 
   return (
     <NavigationContainer theme={DarkTheme}>
-      <Stack.Navigator>
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="List" component={ListScreen} />
-        <Stack.Screen name="Add" component={AddEvent} />
-      </Stack.Navigator>
+      <Drawer.Navigator initialRouteName='List'>
+        <Drawer.Screen name='List' component={ListScreen} />
+        <Drawer.Screen name='+ Entry' component={AddEvent} />
+        <Drawer.Screen name='Login' component={LoginScreen} />
+      </Drawer.Navigator>
     </NavigationContainer>
   )
 }
 
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: '#121212',
-    flex: 1,
-    alignItems: 'center',
-  },
-  button: {
-    color: 'white',
-    marginTop: '15%',
+// const styles = StyleSheet.create({
+//   container: {
+//     backgroundColor: '#121212',
+//     flex: 1,
+//     alignItems: 'center',
+//   },
+//   button: {
+//     color: 'white',
+//     marginTop: '15%',
 
-  },
-  text: {
-    color: 'white',
-    fontSize: 30
-  }
-});
+//   },
+//   text: {
+//     color: 'white',
+//     fontSize: 30
+//   }
+// });
 
 export default App;
 

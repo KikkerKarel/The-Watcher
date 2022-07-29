@@ -62,7 +62,7 @@ export default function AddEvent() {
             <TextInput
                 style={styles.textInput}
                 onChangeText={changeGenres}
-                value={genres}
+                value={genres.toString()}
             />
 
             <Text style={styles.text}>Score</Text>

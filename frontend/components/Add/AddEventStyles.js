@@ -38,7 +38,7 @@ export const styles = StyleSheet.create({
         borderRadius: 15
     },
     buttonText: {
-        fontSize: '25px',
+        fontSize: 25,
         fontWeight: 'bold',
     }
 });
