@@ -1,6 +1,7 @@
-const config = require('../util/db_connection');
 const sql = require('mssql');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const key = require('../util/key.json');
 
 var request = new sql.Request();
 
@@ -39,7 +40,12 @@ exports.login = async (user) => {
     const result = await bcrypt.compareSync(user.password, userDetails.passwordHash);
 
     if(result) {
-        return result;
+        const token = jwt.sign({"username": user.username}, key.jwtKey, {
+            algorithm: "HS256",
+            expiresIn: "1d"
+        });
+        console.log(token);
+        return token;
     }
     return "username or password incorrect";
 

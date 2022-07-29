@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect } from "react";
-import { View, Text, StyleSheet, ScrollView, SafeAreaView, TouchableOpacity } from "react-native";
+import { View, Text, ScrollView, SafeAreaView, TouchableOpacity } from "react-native";
 import { styles } from "./ListStyles";
 
 var countries = [
@@ -29,8 +29,8 @@ export default function ListScreen() {
 
     const [dramas, setDramas] = React.useState([]);
 
-    const loadOnlyOnce = () => {
-        axios.get("/drama/get").then(response => {
+    const loadOnlyOnce = async() => {
+        await axios.get("/drama/get").then(response => {
             setDramas(response.data.payload);
         });
     }
@@ -38,7 +38,6 @@ export default function ListScreen() {
     const [open, setOpen] = React.useState(false);
     const [key, setKey] = React.useState([]);
     const openInfo = (event) => {
-        console.log(event);
         setOpen(!open);
         dramas.forEach(item => {
             if (item.title === event) {

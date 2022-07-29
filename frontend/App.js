@@ -4,27 +4,27 @@ import { DarkTheme, NavigationContainer } from "@react-navigation/native"
 import ListScreen from './components/List/List';
 import AddEvent from './components/Add/AddEvent';
 import axios from 'axios';
-import LoginScreen from './components/Auth/Login';
+import LoginScreen from './components/Auth/Login/Login';
 import React, { useEffect } from 'react';
 import AuthService from './authentication/Auth.Service';
 import { createDrawerNavigator } from '@react-navigation/drawer';
+import LogoutScreen from './components/Auth/Logout/Logout';
 
 const Drawer = createDrawerNavigator();
 
 const App = () => {
 
-  // const [loggedIn, setIsLoggedIn] = React.useState(false);
-  // const [modalVisible, setModalVisible] = React.useState(false);
+  const [loggedIn, setIsLoggedIn] = React.useState(false);
 
-  // useEffect(() => {
-  //   loadOnlyOnce();
-  // }, []);
+  useEffect(() => {
+    loadOnlyOnce();
+  }, []);
 
-  // const loadOnlyOnce = async () => {
-  //   if (await AuthService.isLoggedIn()) {
-  //     setIsLoggedIn(true);
-  //   }
-  // }
+  const loadOnlyOnce = async () => {
+    if (await AuthService.isLoggedIn()) {
+      setIsLoggedIn(true);
+    }
+  }
   axios.defaults.baseURL = "http://192.168.178.227:5000";
 
   return (
@@ -33,6 +33,7 @@ const App = () => {
         <Drawer.Screen name='List' component={ListScreen} />
         <Drawer.Screen name='+ Entry' component={AddEvent} />
         <Drawer.Screen name='Login' component={LoginScreen} />
+        <Drawer.Screen name='Logout' component={LogoutScreen} />
       </Drawer.Navigator>
     </NavigationContainer>
   )
