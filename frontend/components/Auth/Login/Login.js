@@ -8,17 +8,11 @@ export default function LoginScreen({ navigation }) {
     const [username, setUsername] = React.useState("");
     const [password, setPassword] = React.useState("");
 
-    const [redirect, setRedirect] = React.useState(false);
-
     const onPress = async () => {
         await AuthService.login(username, password).then(data => {
             console.log(data);
-            setRedirect(true);
-        });
-
-        if(redirect) {
             navigation.navigate('List');
-        }
+        });
     }
 
     const toRegisterScreen = () => {

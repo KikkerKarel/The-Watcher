@@ -23,17 +23,21 @@ const App = () => {
   const loadOnlyOnce = async () => {
     if (await AuthService.isLoggedIn()) {
       setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
     }
   }
   axios.defaults.baseURL = "http://192.168.178.227:5000";
 
   return (
-    <NavigationContainer theme={DarkTheme}>
+    <NavigationContainer theme={DarkTheme} onStateChange={loadOnlyOnce}>
       <Drawer.Navigator initialRouteName='List'>
         <Drawer.Screen name='List' component={ListScreen} />
         <Drawer.Screen name='+ Entry' component={AddEvent} />
         <Drawer.Screen name='Login' component={LoginScreen} />
-        <Drawer.Screen name='Logout' component={LogoutScreen} />
+        {loggedIn ? (
+          <Drawer.Screen name='Logout' component={LogoutScreen} />
+        ) : null}
       </Drawer.Navigator>
     </NavigationContainer>
   )

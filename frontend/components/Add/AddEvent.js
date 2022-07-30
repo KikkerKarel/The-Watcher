@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { Alert, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity } from "react-native";
 import axios from "axios";
 import { Picker } from "@react-native-picker/picker";
@@ -27,6 +27,7 @@ export default function AddEvent({ navigation }) {
         setUserId(await AsyncStorage.getItem("userId"));
     }
 
+    const textInput = useRef('');
     const AddToList = () => {
         const json = JSON.stringify({
             userId: parseInt(userId),
@@ -39,8 +40,16 @@ export default function AddEvent({ navigation }) {
         });
         axios.post("/drama/add", json, { headers: { 'Content-Type': 'application/json' } }).then(response => {
             console.log(response.data);
+            changeTitle('');
+            changeCountry('');
+            changeEpisodes('');
+            changeDuration('');
+            changeGenres('');
+            setSelectedValue(0);
         });
+      
     }
+
 
     return (
         <SafeAreaView style={styles.container}>
@@ -49,30 +58,40 @@ export default function AddEvent({ navigation }) {
                 style={styles.textInput}
                 onChangeText={changeTitle}
                 value={title}
+                ref={textInput}
+                clearButtonMode='always'
             />
             <Text style={styles.text}>Country</Text>
             <TextInput
                 style={styles.textInput}
                 onChangeText={changeCountry}
                 value={country}
+                clearButtonMode='always'
+                ref={textInput}
             />
             <Text style={styles.text}>Episodes</Text>
             <TextInput
                 style={styles.textInput}
                 onChangeText={changeEpisodes}
                 value={episodes}
+                clearButtonMode='always'
+                ref={textInput}
             />
             <Text style={styles.text}>Duration</Text>
             <TextInput
                 style={styles.textInput}
                 onChangeText={changeDuration}
                 value={duration}
+                clearButtonMode='always'
+                ref={textInput}
             />
             <Text style={styles.text}>Genres</Text>
             <TextInput
                 style={styles.textInput}
                 onChangeText={changeGenres}
                 value={genres.toString()}
+                clearButtonMode='always'
+                ref={textInput}
             />
 
             <Text style={styles.text}>Score</Text>

@@ -18,7 +18,7 @@ export default function LogoutScreen({ navigation }) {
                     <Text style={styles.text}>Yes</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('List')}>
-                    <Text style={styles.text}>Cancle</Text>
+                    <Text style={styles.text}>Cancel</Text>
                 </TouchableOpacity>
             </View>
         </SafeAreaView>

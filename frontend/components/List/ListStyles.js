@@ -57,10 +57,11 @@ export const styles = StyleSheet.create({
         fontSize: 15,
     },
     title: {
-        width: '70%',
+        left: 10,
+        width: '60%',
     },
     rest: {
-        width: '15%',
+        width: '20%',
         textAlign: 'center'
     },
     borderBottom: {
