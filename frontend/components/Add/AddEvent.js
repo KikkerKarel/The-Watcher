@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { Alert, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity } from "react-native";
+import { Alert, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import axios from "axios";
 import { Picker } from "@react-native-picker/picker";
 import { styles } from "./AddEventStyles";
@@ -8,7 +8,13 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const scoreList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
+const epValue = ['8', '12', '16', '20', '32', 'Other'];
+
 export default function AddEvent({ navigation }) {
+
+    useEffect(() => {
+        loadOnlyOnce();
+    }, []);
 
     const [userId, setUserId] = React.useState("");
     const [title, changeTitle] = React.useState("");
@@ -19,16 +25,26 @@ export default function AddEvent({ navigation }) {
 
     const [selectedValue, setSelectedValue] = React.useState(0);
 
-    useEffect(() => {
-        loadOnlyOnce();
-    }, []);
+    const [other, setOther] = React.useState(false);
+
+
 
     const loadOnlyOnce = async () => {
         setUserId(await AsyncStorage.getItem("userId"));
     }
 
+    const onPress = (ep) => {
+        if (ep !== 'Other') {
+            changeEpisodes(ep);
+            setOther(false);
+        } else {
+            changeEpisodes('');
+            setOther(true);
+        }
+    }
+
     const textInput = useRef('');
-    const AddToList = () => {
+    const AddToList = async () => {
         const json = JSON.stringify({
             userId: parseInt(userId),
             title: title,
@@ -38,7 +54,7 @@ export default function AddEvent({ navigation }) {
             genres: genres,
             score: selectedValue
         });
-        axios.post("/drama/add", json, { headers: { 'Content-Type': 'application/json' } }).then(response => {
+        await axios.post("/drama/add", json, { headers: { 'Content-Type': 'application/json' } }).then(response => {
             console.log(response.data);
             changeTitle('');
             changeCountry('');
@@ -47,7 +63,6 @@ export default function AddEvent({ navigation }) {
             changeGenres('');
             setSelectedValue(0);
         });
-      
     }
 
 
@@ -70,13 +85,27 @@ export default function AddEvent({ navigation }) {
                 ref={textInput}
             />
             <Text style={styles.text}>Episodes</Text>
-            <TextInput
-                style={styles.textInput}
-                onChangeText={changeEpisodes}
-                value={episodes}
-                clearButtonMode='always'
-                ref={textInput}
-            />
+
+            <View style={[styles.episodes, other ? {flex: 1} : {flex: 0.5}]}>
+                {epValue.map((ep) => {
+                    return (
+                        <TouchableOpacity style={{ top: 10 }} key={ep} onPress={() => onPress(ep)}>
+                            {ep === episodes ? (
+                                <Text style={[styles.episodesOption, { fontWeight: 'bold', fontSize: 25 }]}>{ep}</Text>
+                            ) : <Text style={styles.episodesOption}>{ep}</Text>}
+                        </TouchableOpacity>
+                    )
+                })}
+            </View>
+            {other ? (
+                    <TextInput
+                        style={[styles.textInput, {top: 10}]}
+                        onChangeText={changeEpisodes}
+                        value={episodes}
+                        clearButtonMode='always'
+                        ref={textInput}
+                    />
+                ) : null}
             <Text style={styles.text}>Duration</Text>
             <TextInput
                 style={styles.textInput}

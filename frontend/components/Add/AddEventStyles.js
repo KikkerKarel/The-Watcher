@@ -11,6 +11,7 @@ export const styles = StyleSheet.create({
         height: 30,
         width: '60%',
         justifyContent: 'center',
+        textAlign: 'center'
     },
     text: {
         color: 'white',
@@ -40,5 +41,17 @@ export const styles = StyleSheet.create({
     buttonText: {
         fontSize: 25,
         fontWeight: 'bold',
-    }
+    },
+
+    episodes: {
+        flexDirection: 'row',
+        width: '75%',
+        flex: 0.5,
+        justifyContent: 'space-between',
+    },
+    episodesOption: {
+        color: '#fff',
+        flex: 1,
+        fontSize: 20
+    },
 });
