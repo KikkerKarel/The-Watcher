@@ -1,5 +1,4 @@
 import 'react-native-gesture-handler';
-import { StyleSheet } from 'react-native';
 import { DarkTheme, NavigationContainer } from "@react-navigation/native"
 import ListScreen from './components/List/List';
 import AddEvent from './components/Add/AddEvent';
@@ -9,6 +8,7 @@ import React, { useEffect } from 'react';
 import AuthService from './authentication/Auth.Service';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import LogoutScreen from './components/Auth/Logout/Logout';
+import { FontAwesome5, MaterialIcons } from '@expo/vector-icons';
 
 const Drawer = createDrawerNavigator();
 
@@ -31,12 +31,46 @@ const App = () => {
 
   return (
     <NavigationContainer theme={DarkTheme} onStateChange={loadOnlyOnce}>
-      <Drawer.Navigator initialRouteName='List'>
-        <Drawer.Screen name='List' component={ListScreen} />
-        <Drawer.Screen name='+ Entry' component={AddEvent} />
-        <Drawer.Screen name='Login' component={LoginScreen} />
+      <Drawer.Navigator initialRouteName='Login' screenOptions={{ headerTintColor: '#fff'}}>
+        <Drawer.Screen name='List' component={ListScreen}
+          options={{
+            title: 'MyList',
+            drawerIcon: (() => (
+              // <FontAwesome5 name="list" color="white" />
+              <MaterialIcons name="format-list-bulleted" size={20} color="white" />
+            )),
+            drawerActiveTintColor: '#EF0107',
+            drawerLabelStyle: { color: '#fff' },
+          }}
+        />
+        <Drawer.Screen name='Entry' component={AddEvent}
+          options={{
+            drawerIcon: (() => (
+              <MaterialIcons name="playlist-add" size={20} color="white" />
+            )),
+            drawerActiveTintColor: '#EF0107',
+            drawerLabelStyle: { color: '#fff' }
+          }}
+        />
+        <Drawer.Screen name='Login' component={LoginScreen}
+          options={{
+            drawerIcon: (() => (
+              <MaterialIcons name="login" size={20} color="white" />
+            )),
+            drawerActiveTintColor: '#EF0107',
+            drawerLabelStyle: { color: '#fff' }
+          }}
+        />
         {loggedIn ? (
-          <Drawer.Screen name='Logout' component={LogoutScreen} />
+          <Drawer.Screen name='Logout' component={LogoutScreen}
+            options={{
+              drawerIcon: (() => (
+                <MaterialIcons name="logout" size={20} color="white" />
+              )),
+              drawerActiveTintColor: '#EF0107',
+              drawerLabelStyle: { color: '#fff' }
+            }}
+          />
         ) : null}
       </Drawer.Navigator>
     </NavigationContainer>

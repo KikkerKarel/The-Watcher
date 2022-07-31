@@ -1,6 +1,7 @@
 const Drama = require('../model/drama');
 const catchAsync = require('../util/catchAsync');
 const IDrama = require('../interface/IDrama');
+const User = require('../model/user');
 
 exports.getDrama = catchAsync(async(req, res, next) => {
 
@@ -11,6 +12,18 @@ exports.getDrama = catchAsync(async(req, res, next) => {
         payload: result
     });
 });
+
+exports.getDramasByUserId = catchAsync(async(req, res, next) => {
+
+    const newUser = new User(req.params.userId);
+
+    var result = await IDrama.getDramasByUserId(newUser);
+
+    res.status(200).send({
+        success: true,
+        payload: result
+    });
+})
 
 exports.addDrama = catchAsync(async(req, res, next) => {
 

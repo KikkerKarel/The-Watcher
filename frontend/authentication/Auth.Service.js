@@ -19,7 +19,7 @@ class Authservice {
     }
 
     async logout(){
-        await AsyncStorage.removeItem("user");
+        await AsyncStorage.removeItem("userId");
         await AsyncStorage.removeItem("token");
     }
 

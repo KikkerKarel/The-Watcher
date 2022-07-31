@@ -8,6 +8,10 @@ router
     .get(dramaController.getDrama)
 
 router
+    .route('/get/:userId')
+    .get(dramaController.getDramasByUserId)
+
+router
     .route('/add')
     .post(dramaController.addDrama)
 

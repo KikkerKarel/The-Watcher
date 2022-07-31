@@ -14,6 +14,16 @@ exports.getDrama = async () => {
     return result;
 }
 
+exports.getDramasByUserId = async (user) => {
+    var dramas = (await request.query(`SELECT * FROM Drama WHERE userId='${user.userId}'`)).recordsets;
+    
+    var result;
+    dramas.forEach((element) => {
+        result = element;
+    });
+    return result;
+}
+
 exports.addDrama = async (drama) => {
 
     const result = await request.query(`INSERT INTO Drama (userId, title, country, episodes, duration, genres, score) 

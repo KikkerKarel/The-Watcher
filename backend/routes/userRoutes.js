@@ -9,7 +9,7 @@ router
 
 router
     .route('/register')
-    .post(userController.register)
+    .get(userController.register)
 
 router
     .route('/login')

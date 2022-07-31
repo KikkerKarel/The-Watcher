@@ -11,6 +11,8 @@ export default function LoginScreen({ navigation }) {
     const onPress = async () => {
         await AuthService.login(username, password).then(data => {
             console.log(data);
+            setUsername('');
+            setPassword('');
             navigation.navigate('List');
         });
     }
