@@ -131,7 +131,7 @@ export default function AddEvent({ navigation }) {
             >
                 {scoreList.map((score) => {
                     return (
-                        <Picker.Item label={score.toString()} value={score} key={score} />
+                        <Picker.Item color="#fff" label={score.toString()} value={score} key={score} />
                     )
                 })}
             </Picker>

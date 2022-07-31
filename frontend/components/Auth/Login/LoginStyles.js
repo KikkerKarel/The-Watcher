@@ -8,7 +8,7 @@ export const styles = StyleSheet.create({
     },
     textInput: {
         backgroundColor: 'white',
-        borderRadius: 15,
+        borderRadius: 5,
         backgroundColor: '#4A0000',
         height: 30,
         width: '60%',
@@ -30,7 +30,7 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#4A0000',
-        borderRadius: 12
+        borderRadius: 5
     },
     buttonText: {
         fontSize: 25,

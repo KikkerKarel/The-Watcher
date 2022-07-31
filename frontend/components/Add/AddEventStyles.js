@@ -6,12 +6,13 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
     },
     textInput: {
-        backgroundColor: 'white',
-        borderRadius: 15,
+        backgroundColor: '#4A0000',
+        borderRadius: 5,
         height: 30,
         width: '60%',
         justifyContent: 'center',
-        textAlign: 'center'
+        textAlign: 'center',
+        color: '#fff'
     },
     text: {
         color: 'white',
@@ -20,12 +21,12 @@ export const styles = StyleSheet.create({
         marginTop: '5%'
     },
     picker: {
-        color: 'white',
-        backgroundColor: '#fff',
-        height: 100,
+        color: '#fff',
+        backgroundColor: '#4A0000',
+        height: 75,
         overflow: 'hidden',
         width: '60%',
-        borderRadius: 15,
+        borderRadius: 5,
         justifyContent: 'center'
     },
     button: {
@@ -36,7 +37,7 @@ export const styles = StyleSheet.create({
         height: 40,
         justifyContent: 'center',
         alignItems: 'center',
-        borderRadius: 15
+        borderRadius: 5
     },
     buttonText: {
         fontSize: 25,

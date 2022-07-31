@@ -58,7 +58,8 @@ const App = () => {
               <MaterialIcons name="login" size={20} color="white" />
             )),
             drawerActiveTintColor: '#EF0107',
-            drawerLabelStyle: { color: '#fff' }
+            drawerLabelStyle: { color: '#fff' },
+            // drawerStyle: (loggedIn ? {opacity: 1} : {opacity: 0})
           }}
         />
         {loggedIn ? (
