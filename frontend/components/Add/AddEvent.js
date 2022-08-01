@@ -1,9 +1,11 @@
 import React, { useEffect, useRef } from "react";
-import { Alert, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Alert, SafeAreaView, Text, TextInput, TouchableOpacity, View } from "react-native";
 import axios from "axios";
 import { Picker } from "@react-native-picker/picker";
 import { styles } from "./AddEventStyles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
 
 
 const scoreList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -68,79 +70,80 @@ export default function AddEvent({ navigation }) {
 
     return (
         <SafeAreaView style={styles.container}>
-            <Text style={styles.text}>Title</Text>
-            <TextInput
-                style={styles.textInput}
-                onChangeText={changeTitle}
-                value={title}
-                ref={textInput}
-                clearButtonMode='always'
-            />
-            <Text style={styles.text}>Country</Text>
-            <TextInput
-                style={styles.textInput}
-                onChangeText={changeCountry}
-                value={country}
-                clearButtonMode='always'
-                ref={textInput}
-            />
-            <Text style={styles.text}>Episodes</Text>
+            <KeyboardAwareScrollView contentContainerStyle={{ alignItems: 'center', justifyContent: 'center'}} keyboardDismissMode="on-drag" resetScrollToCoords={{ x: 0, y: 0 }} scrollEnabled={false}>
+                <Text style={styles.text}>Title</Text>
+                <TextInput
+                    style={styles.textInput}
+                    onChangeText={changeTitle}
+                    value={title}
+                    ref={textInput}
+                    clearButtonMode='always'
+                />
+                <Text style={styles.text}>Country</Text>
+                <TextInput
+                    style={styles.textInput}
+                    onChangeText={changeCountry}
+                    value={country}
+                    clearButtonMode='always'
+                    ref={textInput}
+                />
+                <Text style={styles.text}>Episodes</Text>
 
-            <View style={[styles.episodes, other ? {flex: 1} : {flex: 0.5}]}>
-                {epValue.map((ep) => {
-                    return (
-                        <TouchableOpacity style={{ top: 10 }} key={ep} onPress={() => onPress(ep)}>
-                            {ep === episodes ? (
-                                <Text style={[styles.episodesOption, { fontWeight: 'bold', fontSize: 25 }]}>{ep}</Text>
-                            ) : <Text style={styles.episodesOption}>{ep}</Text>}
-                        </TouchableOpacity>
-                    )
-                })}
-            </View>
-            {other ? (
+                <View style={[styles.episodes, other ? { flex: 1 } : { flex: 0.5 }]}>
+                    {epValue.map((ep) => {
+                        return (
+                            <TouchableOpacity style={{ top: 10 }} key={ep} onPress={() => onPress(ep)}>
+                                {ep === episodes ? (
+                                    <Text style={[styles.episodesOption, { fontWeight: 'bold', fontSize: 25 }]}>{ep}</Text>
+                                ) : <Text style={styles.episodesOption}>{ep}</Text>}
+                            </TouchableOpacity>
+                        )
+                    })}
+                </View>
+                {other ? (
                     <TextInput
-                        style={[styles.textInput, {top: 10}]}
+                        style={[styles.textInput, { top: 10 }]}
                         onChangeText={changeEpisodes}
                         value={episodes}
                         clearButtonMode='always'
                         ref={textInput}
                     />
                 ) : null}
-            <Text style={styles.text}>Duration</Text>
-            <TextInput
-                style={styles.textInput}
-                onChangeText={changeDuration}
-                value={duration}
-                clearButtonMode='always'
-                ref={textInput}
-            />
-            <Text style={styles.text}>Genres</Text>
-            <TextInput
-                style={styles.textInput}
-                onChangeText={changeGenres}
-                value={genres.toString()}
-                clearButtonMode='always'
-                ref={textInput}
-            />
+                <Text style={styles.text}>Duration</Text>
+                <TextInput
+                    style={styles.textInput}
+                    onChangeText={changeDuration}
+                    value={duration}
+                    clearButtonMode='always'
+                    ref={textInput}
+                />
+                <Text style={styles.text}>Genres</Text>
+                <TextInput
+                    style={styles.textInput}
+                    onChangeText={changeGenres}
+                    value={genres.toString()}
+                    clearButtonMode='always'
+                    ref={textInput}
+                />
 
-            <Text style={styles.text}>Score</Text>
-            <Picker
-                selectedValue={selectedValue}
-                style={styles.picker}
-                onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
-            >
-                {scoreList.map((score) => {
-                    return (
-                        <Picker.Item color="#fff" label={score.toString()} value={score} key={score} />
-                    )
-                })}
-            </Picker>
+                <Text style={styles.text}>Score</Text>
+                <Picker
+                    selectedValue={selectedValue}
+                    style={styles.picker}
+                    onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
+                >
+                    {scoreList.map((score) => {
+                        return (
+                            <Picker.Item color="#fff" label={score.toString()} value={score} key={score} />
+                        )
+                    })}
+                </Picker>
 
 
-            <TouchableOpacity style={styles.button} onPress={AddToList}>
-                <Text style={styles.buttonText}>Add</Text>
-            </TouchableOpacity>
-
+                <TouchableOpacity style={styles.button} onPress={AddToList}>
+                    <Text style={styles.buttonText}>Add</Text>
+                </TouchableOpacity>
+            </KeyboardAwareScrollView>
         </SafeAreaView>
     )
 }

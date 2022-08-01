@@ -5,6 +5,7 @@ let connection = sql.connect(config);
 var request = new sql.Request();
 
 exports.getDrama = async () => {
+
     var dramas = (await request.query(`SELECT * FROM Drama`)).recordsets;
     
     var result;
@@ -14,7 +15,16 @@ exports.getDrama = async () => {
     return result;
 }
 
+exports.getDramaById = async (drama) => {
+
+    console.log(drama.Id);
+    var result = (await request.query(`SELECT * FROM Drama WHERE Id='${drama.Id}'`)).recordset;
+
+    return result[0];
+}
+
 exports.getDramasByUserId = async (user) => {
+
     var dramas = (await request.query(`SELECT * FROM Drama WHERE userId='${user.userId}'`)).recordsets;
     
     var result;

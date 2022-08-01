@@ -46,7 +46,7 @@ export const styles = StyleSheet.create({
 
     episodes: {
         flexDirection: 'row',
-        width: '75%',
+        width: '80%',
         flex: 0.5,
         justifyContent: 'space-between',
     },

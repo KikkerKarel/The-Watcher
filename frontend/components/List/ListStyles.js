@@ -13,11 +13,12 @@ export const styles = StyleSheet.create({
     scrollview: {
         flexDirection: 'column',
         backgroundColor: '#4A0000',
+        // backgroundColor: 'transparent',
         overflow: 'hidden',
         textAlign: 'center',
         borderStyle: 'solid',
-        borderWidth: 1,
-        borderBottomColor: '#fff',
+        borderWidth: 0.5,
+        borderBottomColor: '#D3D3D3',
 
     },
     header: {
@@ -68,5 +69,5 @@ export const styles = StyleSheet.create({
         borderBottomColor: '#fff',
         borderStyle: 'solid',
         borderBottomWidth: 1
-    }
+    },
 });

@@ -13,6 +13,18 @@ exports.getDrama = catchAsync(async(req, res, next) => {
     });
 });
 
+exports.getDramaById = catchAsync(async(req, res, next) => {
+    
+    const newDrama = new Drama(req.params.id);
+
+    var result = await IDrama.getDramaById(newDrama);
+
+    res.status(200).send({
+        success: true,
+        payload: result
+    });
+})
+
 exports.getDramasByUserId = catchAsync(async(req, res, next) => {
 
     const newUser = new User(req.params.userId);

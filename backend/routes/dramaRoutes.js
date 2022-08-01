@@ -5,15 +5,19 @@ const router = express.Router();
 
 router
     .route('/get')
-    .get(dramaController.getDrama)
+    .get(dramaController.getDrama);
+
+router
+    .route('/get/dramaId/:id')
+    .get(dramaController.getDramaById);
 
 router
     .route('/get/:userId')
-    .get(dramaController.getDramasByUserId)
+    .get(dramaController.getDramasByUserId);
 
 router
     .route('/add')
-    .post(dramaController.addDrama)
+    .post(dramaController.addDrama);
 
 
 module.exports = router;
