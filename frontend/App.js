@@ -6,11 +6,49 @@ import axios from 'axios';
 import LoginScreen from './components/Auth/Login/Login';
 import React, { useEffect } from 'react';
 import AuthService from './authentication/Auth.Service';
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
 import LogoutScreen from './components/Auth/Logout/Logout';
-import { FontAwesome5, MaterialIcons } from '@expo/vector-icons';
+import { MaterialIcons, Ionicons } from '@expo/vector-icons';
+import { StyleSheet, Text, View } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Drawer = createDrawerNavigator();
+
+const CustomDrawer = props => {
+
+  const [username, setUsername] = React.useState('');
+
+  useEffect(() => {
+    loadOnlyOnce();
+  }, [props])
+
+  const loadOnlyOnce = async () => {
+    setUsername(await AsyncStorage.getItem("username"));
+  }
+
+  return (
+    <DrawerContentScrollView {...props}>
+      <View style={styles.container}>
+        <Ionicons name="person-circle-outline" size={50} color="white" />
+        <Text style={styles.text}>{username}</Text>
+      </View>
+      <DrawerItemList {...props} />
+    </DrawerContentScrollView>
+  )
+}
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: '#4A0000',
+    borderRadius: 5,
+    height: '40%',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  text: {
+    color: '#fff'
+  }
+});
 
 const App = () => {
 
@@ -27,16 +65,16 @@ const App = () => {
       setIsLoggedIn(false);
     }
   }
+
   axios.defaults.baseURL = "http://192.168.178.227:5000";
 
   return (
     <NavigationContainer theme={DarkTheme} onStateChange={loadOnlyOnce}>
-      <Drawer.Navigator initialRouteName='Login' screenOptions={{ headerTintColor: '#fff'}}>
+      <Drawer.Navigator initialRouteName='Login' screenOptions={{ headerTintColor: '#fff' }} drawerContent={props => <CustomDrawer {...props} />}>
         <Drawer.Screen name='List' component={ListScreen}
           options={{
             title: 'MyList',
             drawerIcon: (() => (
-              // <FontAwesome5 name="list" color="white" />
               <MaterialIcons name="format-list-bulleted" size={20} color="white" />
             )),
             drawerActiveTintColor: '#EF0107',
@@ -59,7 +97,6 @@ const App = () => {
             )),
             drawerActiveTintColor: '#EF0107',
             drawerLabelStyle: { color: '#fff' },
-            // drawerStyle: (loggedIn ? {opacity: 1} : {opacity: 0})
           }}
         />
         {loggedIn ? (
@@ -77,23 +114,6 @@ const App = () => {
     </NavigationContainer>
   )
 }
-
-// const styles = StyleSheet.create({
-//   container: {
-//     backgroundColor: '#121212',
-//     flex: 1,
-//     alignItems: 'center',
-//   },
-//   button: {
-//     color: 'white',
-//     marginTop: '15%',
-
-//   },
-//   text: {
-//     color: 'white',
-//     fontSize: 30
-//   }
-// });
 
 export default App;
 

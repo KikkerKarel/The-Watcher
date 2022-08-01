@@ -8,6 +8,7 @@ class Authservice {
         if (response.status === 200 && response.data.payload) {
             await AsyncStorage.setItem("token", response.data.payload.token);
             await AsyncStorage.setItem("userId", response.data.payload.userId.toString());
+            await AsyncStorage.setItem("username", response.data.payload.username);
             console.log("Set token!");
             return await AsyncStorage.getItem("token");
         }
@@ -19,8 +20,7 @@ class Authservice {
     }
 
     async logout(){
-        await AsyncStorage.removeItem("userId");
-        await AsyncStorage.removeItem("token");
+        await AsyncStorage.multiRemove(["userId", "token", "username"]);
     }
 
     register(username, password) {

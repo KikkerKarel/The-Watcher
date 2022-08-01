@@ -46,7 +46,7 @@ exports.login = async (user) => {
             expiresIn: "1d"
         });
         console.log(token);
-        result.push({token: token, userId: userDetails.Id});
+        result.push({token: token, userId: userDetails.Id, username: userDetails.username});
         return result[0];
     }
     return "username or password incorrect";

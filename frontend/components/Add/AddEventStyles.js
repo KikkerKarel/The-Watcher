@@ -4,6 +4,7 @@ export const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
+        backgroundColor: '#121212'
     },
     textInput: {
         backgroundColor: '#4A0000',

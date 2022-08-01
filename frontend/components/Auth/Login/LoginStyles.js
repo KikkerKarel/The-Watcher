@@ -2,9 +2,9 @@ import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
     container: {
-        flex: 0.5,
-        justifyContent: 'center',
-        alignItems: 'center'
+        flex: 1,
+        alignItems: 'center',
+        backgroundColor: '#121212'
     },
     textInput: {
         backgroundColor: 'white',
@@ -26,7 +26,7 @@ export const styles = StyleSheet.create({
         backgroundColor: '#fff',
         marginTop: '10%',
         width: '25%',
-        height: '15%',
+        height: '7.5%',
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#4A0000',

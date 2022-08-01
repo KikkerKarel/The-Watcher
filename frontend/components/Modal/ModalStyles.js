@@ -5,6 +5,7 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#121212',
+        borderRadius: 5
     },
     textInput: {
         backgroundColor: '#4A0000',
