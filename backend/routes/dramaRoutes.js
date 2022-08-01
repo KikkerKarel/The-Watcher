@@ -8,8 +8,8 @@ router
     .get(dramaController.getDrama);
 
 router
-    .route('/get/dramaId/:id')
-    .get(dramaController.getDramaById);
+    .route('/update/:id')
+    .put(dramaController.updateDramaById);
 
 router
     .route('/get/:userId')

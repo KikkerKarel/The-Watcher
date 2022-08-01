@@ -13,11 +13,11 @@ exports.getDrama = catchAsync(async(req, res, next) => {
     });
 });
 
-exports.getDramaById = catchAsync(async(req, res, next) => {
+exports.updateDramaById = catchAsync(async(req, res, next) => {
     
-    const newDrama = new Drama(req.params.id);
+    const newDrama = new Drama(req.params.id, null, req.body.title, req.body.country, req.body.episodes, req.body.duration, req.body.genres, req.body.score);
 
-    var result = await IDrama.getDramaById(newDrama);
+    var result = await IDrama.updateDramaById(newDrama);
 
     res.status(200).send({
         success: true,

@@ -15,12 +15,20 @@ exports.getDrama = async () => {
     return result;
 }
 
-exports.getDramaById = async (drama) => {
+exports.updateDramaById = async (drama) => {
 
-    console.log(drama.Id);
-    var result = (await request.query(`SELECT * FROM Drama WHERE Id='${drama.Id}'`)).recordset;
+    const result = (await request.query(`UPDATE Drama SET 
+    title = '${drama.title}', 
+    country = '${drama.country}', 
+    episodes = '${drama.episodes}', 
+    duration = '${drama.duration}', 
+    genres = '${drama.genres}', 
+    score = '${drama.score}' 
+    WHERE Id='${parseInt(drama.Id)}'`));
 
-    return result[0];
+    console.log(result);
+
+    return result;
 }
 
 exports.getDramasByUserId = async (user) => {

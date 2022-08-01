@@ -26,9 +26,9 @@ var countries = [
     },
 ];
 
-const wait = (timeout) => {
-    return new Promise(resolve => setTimeout(resolve, timeout));
-}
+// const wait = (timeout) => {
+//     return new Promise(resolve => setTimeout(resolve, timeout));
+// }
 
 export default function ListScreen() {
 
@@ -100,7 +100,7 @@ export default function ListScreen() {
                     <Text style={styles.text}>Genre(s): {key.genres}</Text>
                 </View>
                 <View style={{ flex: 0.5, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                    <TouchableOpacity style={{ right: 20 }} onPress={() => toggleModal(props.id)}>
+                    <TouchableOpacity style={{ right: 20, flexDirection: 'row' }} onPress={() => toggleModal(props.id)}>
                         <AntDesign name="edit" size={25} color="white" />
                     </TouchableOpacity>
                 </View>
@@ -149,7 +149,7 @@ export default function ListScreen() {
                 </ScrollView>
             ) : <Text style={styles.text}>Please log in to view your list !</Text>}
             { isModalVisible ? (
-                <Popup drama={dramaEntry} isVisible={isModalVisible} onBackdropPress={() => setModalVisible(false)}/>
+                <Popup drama={dramaEntry} toggle={setModalVisible} isVisible={isModalVisible} onBackdropPress={() => setModalVisible(false)}/>
             ) : null}
         </SafeAreaView>
     )
