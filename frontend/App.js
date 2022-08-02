@@ -4,20 +4,20 @@ import ListScreen from './components/List/List';
 import AddEvent from './components/Add/AddEvent';
 import axios from 'axios';
 import LoginScreen from './components/Auth/Login/Login';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import AuthService from './authentication/Auth.Service';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
 import LogoutScreen from './components/Auth/Logout/Logout';
-import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialIcons, Ionicons } from '@expo/vector-icons';
 import { StyleSheet, Text, View } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { launchImageLibrary } from 'react-native-image-picker';
 import ProfilePicture from './components/Profile/ProfilePicture';
+import ProfileScreen from './components/Profile/Profile';
 
 
 const Drawer = createDrawerNavigator();
 
-const CustomDrawer = props => {
+const CustomDrawer = (props) => {
 
   const [username, setUsername] = React.useState('');
 
@@ -36,6 +36,7 @@ const CustomDrawer = props => {
         <Text style={styles.text}>{username}</Text>
       </View>
       <DrawerItemList {...props} />
+
     </DrawerContentScrollView>
   )
 }
@@ -74,6 +75,15 @@ const App = () => {
   return (
     <NavigationContainer theme={DarkTheme} onStateChange={loadOnlyOnce}>
       <Drawer.Navigator initialRouteName='Login' screenOptions={{ headerTintColor: '#fff' }} drawerContent={props => <CustomDrawer {...props} />}>
+        <Drawer.Screen name='Profile' component={ProfileScreen}
+          options={{
+            drawerIcon: (() => (
+              <Ionicons name="person-circle-outline" size={20} color="white" />
+            )),
+            drawerActiveTintColor: '#EF0107',
+            drawerLabelStyle: { color: '#fff' },
+          }}
+        />
         <Drawer.Screen name='List' component={ListScreen}
           options={{
             title: 'MyList',

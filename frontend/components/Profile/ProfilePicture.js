@@ -4,22 +4,30 @@ import { Alert, Image, Pressable, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useDrawerStatus } from '@react-navigation/drawer';
 
-const ProfilePicture = ({ navigation }) => {
+const ProfilePicture = (props) => {
 
     const [profilePicture, setProfilePicture] = React.useState(null);
 
     useEffect(() => {
         loadOnlyOnce();
-    }, []);
+    }, [props]);
+
+    const isDrawerOpen = useDrawerStatus();
 
     const loadOnlyOnce = async () => {
-        const userId = await AsyncStorage.getItem('userId');
-        await axios.get(`/user/image/get/${userId}`).then(response => {
-            setProfilePicture(response.data.payload.profilePicture);
-        }).catch(err => {
-            console.log(err);
-        })
+        if (isDrawerOpen === 'open') {
+            const userId = await AsyncStorage.getItem('userId');
+            await axios.get(`/user/image/get/${userId}`).then(response => {
+                setProfilePicture(response.data.payload.profilePicture);
+            }).catch(err => {
+                console.log(err);
+            });
+        } else {
+            setProfilePicture(null);
+        }
+
     }
 
     const selectImage = async () => {
@@ -37,7 +45,7 @@ const ProfilePicture = ({ navigation }) => {
                 imageUri: newUri
             });
             await axios.post(`/user/image/upload/${userId}`, json, { headers: { 'Content-Type': 'application/json' } }).then(response => {
-                setProfilePicture(newUri);
+                loadOnlyOnce();
             }).catch(err => {
                 console.log(err);
                 Alert.alert("Upload has failed!");
@@ -45,12 +53,19 @@ const ProfilePicture = ({ navigation }) => {
         }
     }
 
+    // const [show, setShow] = React.useState(true);
+
+    // const toProfile = () => {
+    //     setShow(!show);
+    //     props.toProfile(show);
+    // }
+
     return (
         profilePicture !== null ? (
-            <TouchableOpacity onLongPress={selectImage} onPress={() => console.log('pressed')}>
+            <TouchableOpacity onLongPress={selectImage} {...props} >
                 <Image source={{ uri: profilePicture }} style={{ width: 75, height: 75, borderRadius: 50 }} />
             </TouchableOpacity>
-        ) : <Ionicons name="person-circle-outline" size={50} color="white" onLongPress={selectImage} />
+        ) : <Ionicons name="person-circle-outline" size={50} color="white" onLongPress={selectImage} {...props} />
     )
 }
 
