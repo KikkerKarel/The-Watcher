@@ -50,5 +50,22 @@ exports.login = async (user) => {
         return result[0];
     }
     return "username or password incorrect";
+}
 
+exports.uploadProfilePicture = async (user) => {
+
+    const result = await request.query(`IF NOT EXISTS
+    (SELECT profilePicture FROM Profile WHERE Id='${parseInt(user.userId)}')
+        INSERT INTO Profile (profilePicture) VALUES ('${user.image}')
+    ELSE
+        UPDATE Profile SET profilePicture = '${user.image}' WHERE Id='${parseInt(user.userId)}'`);
+
+    return result
+}
+
+exports.getProfilePicture = async (user) => {
+
+    const result = (await request.query(`SELECT profilePicture FROM Profile WHERE Id='${parseInt(user.userId)}'`)).recordset;
+
+    return result[0];
 }

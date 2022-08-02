@@ -15,4 +15,12 @@ router
     .route('/login')
     .post(userController.login)
 
+router
+    .route('/image/upload/:userId')
+    .post(userController.uploadProfilePicture)
+
+router
+    .route('/image/get/:userId')
+    .get(userController.getProfilePicture)
+
 module.exports = router;

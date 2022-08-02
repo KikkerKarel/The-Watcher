@@ -8,9 +8,12 @@ import React, { useEffect } from 'react';
 import AuthService from './authentication/Auth.Service';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
 import LogoutScreen from './components/Auth/Logout/Logout';
-import { MaterialIcons, Ionicons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 import { StyleSheet, Text, View } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { launchImageLibrary } from 'react-native-image-picker';
+import ProfilePicture from './components/Profile/ProfilePicture';
+
 
 const Drawer = createDrawerNavigator();
 
@@ -29,7 +32,7 @@ const CustomDrawer = props => {
   return (
     <DrawerContentScrollView {...props}>
       <View style={styles.container}>
-        <Ionicons name="person-circle-outline" size={50} color="white" />
+        <ProfilePicture />
         <Text style={styles.text}>{username}</Text>
       </View>
       <DrawerItemList {...props} />
