@@ -50,7 +50,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   text: {
-    color: '#fff'
+    color: '#fff',
+    fontSize: 25,
+    fontWeight: 'bold'
   }
 });
 

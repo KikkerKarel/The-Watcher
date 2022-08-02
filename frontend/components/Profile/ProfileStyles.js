@@ -24,10 +24,11 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         marginTop: '2%',
         height: 200,
+        borderRadius: 5
     },
     statsHeader: {
-        flexDirection: 'row', 
-        alignItems: 'center', 
+        flexDirection: 'row',
+        alignItems: 'center',
         width: '100%',
         height: '25%',
         justifyContent: 'center'
@@ -44,10 +45,28 @@ export const styles = StyleSheet.create({
         width: '50%',
         height: '100%',
         justifyContent: 'center',
-        alignItems: 'center'
+        // alignItems: 'center',
+    },
+    statsText: {
+        color: '#fff',
+        fontSize: 15,
+        left: 10
+    },
+    settingsContainer: {
+        // width: '100%',
+        // backgroundColor: 'white',
+        height: 200,
+        flexDirection: 'row',
+        justifyContent: 'space-between'
     },
     text: {
         color: '#fff',
-        fontSize: 15
+        fontSize: 15,
+    },
+    textInput: {
+        backgroundColor: 'white', 
+        width: '100%', 
+        borderRadius: 5,
+        marginTop: '10%'
     }
 });

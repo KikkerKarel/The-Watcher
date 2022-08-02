@@ -38,10 +38,6 @@ export default function ListScreen() {
         if (isFocused) {
             loadOnlyOnce();
         };
-
-        // if (refreshing) {
-        //     loadOnlyOnce();
-        // }
     }, [isFocused]);
 
     const [refreshing, setRefreshing] = React.useState(false);
