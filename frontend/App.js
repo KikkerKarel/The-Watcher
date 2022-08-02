@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler';
 import { DarkTheme, NavigationContainer } from "@react-navigation/native"
-import ListScreen from './components/List/List';
-import AddEvent from './components/Add/AddEvent';
+// import ListScreen from './components/List/DramaList';
+// import AddEvent from './components/Add/AddEvent';
 import axios from 'axios';
 import LoginScreen from './components/Auth/Login/Login';
 import React, { useEffect, useState } from 'react';
@@ -13,6 +13,8 @@ import { StyleSheet, Text, View } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ProfilePicture from './components/Profile/ProfilePicture';
 import ProfileScreen from './components/Profile/Profile';
+import TabNavList from './components/Tab/TabNavList';
+import TabNavEntry from './components/Tab/TabNavEntry';
 
 
 const Drawer = createDrawerNavigator();
@@ -86,7 +88,17 @@ const App = () => {
             drawerLabelStyle: { color: '#fff' },
           }}
         />
-        <Drawer.Screen name='List' component={ListScreen}
+        {/* <Drawer.Screen name='List' component={ListScreen}
+          options={{
+            title: 'MyList',
+            drawerIcon: (() => (
+              <MaterialIcons name="format-list-bulleted" size={20} color="white" />
+            )),
+            drawerActiveTintColor: '#EF0107',
+            drawerLabelStyle: { color: '#fff' },
+          }}
+        /> */}
+        <Drawer.Screen name='List' component={TabNavList}
           options={{
             title: 'MyList',
             drawerIcon: (() => (
@@ -96,7 +108,7 @@ const App = () => {
             drawerLabelStyle: { color: '#fff' },
           }}
         />
-        <Drawer.Screen name='Entry' component={AddEvent}
+        <Drawer.Screen name='Entry' component={TabNavEntry}
           options={{
             drawerIcon: (() => (
               <MaterialIcons name="playlist-add" size={20} color="white" />

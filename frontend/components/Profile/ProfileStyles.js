@@ -67,6 +67,16 @@ export const styles = StyleSheet.create({
         backgroundColor: 'white', 
         width: '100%', 
         borderRadius: 5,
-        marginTop: '10%'
+        marginTop: '10%',
+        height: 30,
+    },
+    confirmButton: {
+        marginTop: '10%', 
+        backgroundColor: '#fff', 
+        borderRadius: 5, 
+        width: '40%', 
+        height: 25, 
+        justifyContent: 'center', 
+        alignItems: 'center',
     }
 });

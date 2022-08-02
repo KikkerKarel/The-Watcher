@@ -84,7 +84,7 @@ export default function ProfileScreen({ navigation }) {
 
     return (
         <SafeAreaView style={styles.container}>
-            <KeyboardAwareScrollView style={{ width: '100%' }} keyboardDismissMode="on-drag" resetScrollToCoords={{ x: 0, y: 0 }} scrollEnabled={false}>
+            <KeyboardAwareScrollView style={{ width: '100%' }} keyboardDismissMode="on-drag" resetScrollToCoords={{ x: 0, y: 0 }}>
                 <View style={styles.header}>
                     <Image source={{ uri: profilePicture }} style={{ width: 150, height: 150, borderRadius: 150 }} />
                     <Text style={styles.headerText}>test</Text>
@@ -119,14 +119,17 @@ export default function ProfileScreen({ navigation }) {
                             <Text style={styles.text}>Change username</Text>
                         </TouchableOpacity>
                         {changeUsername ? (
-                            <View style={{ width: '75%' }}>
-                                {/* <Text style={styles.text}>True</Text> */}
+                            <View style={{ width: '90%', alignItems: 'center' }}>
                                 <TextInput
                                     style={styles.textInput}
                                     onChangeText={setNewUsername}
                                     value={newUsername}
                                     clearButtonMode='always'
+                                    textAlign="center"
                                 />
+                                <TouchableOpacity style={styles.confirmButton}>
+                                    <Text style={{ fontWeight: 'bold' }}>Confirm</Text>
+                                </TouchableOpacity>
                             </View>
 
                         ) : null}
@@ -137,13 +140,14 @@ export default function ProfileScreen({ navigation }) {
                             <Text style={styles.text}>Change password</Text>
                         </TouchableOpacity>
                         {changePassword ? (
-                            <View style={{ width: '75%' }}>
+                            <View style={{ width: '90%', alignItems: 'center' }}>
                                 <TextInput
                                     style={styles.textInput}
                                     onChangeText={setNewPassword}
                                     value={newPassword}
                                     clearButtonMode='always'
                                     secureTextEntry={true}
+                                    textAlign="center"
                                 />
                                 <TextInput
                                     style={styles.textInput}
@@ -151,7 +155,11 @@ export default function ProfileScreen({ navigation }) {
                                     value={confirmPassword}
                                     clearButtonMode='always'
                                     secureTextEntry={true}
+                                    textAlign="center"
                                 />
+                                <TouchableOpacity style={styles.confirmButton}>
+                                    <Text style={{ fontWeight: 'bold' }}>Confirm</Text>
+                                </TouchableOpacity>
                             </View>
                         ) : null}
                     </View>
