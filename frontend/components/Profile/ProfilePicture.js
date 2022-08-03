@@ -49,7 +49,7 @@ const ProfilePicture = (props) => {
     return (
         profilePicture !== null ? (
             <TouchableOpacity onLongPress={selectImage} {...props} >
-                <Image source={{ uri: profilePicture }} style={{ width: 100, height: 100, borderRadius: 50 }} />
+                <Image source={{ uri: profilePicture }} style={props.customStyle} />
             </TouchableOpacity>
         ) : <Ionicons name="person-circle-outline" size={50} color="white" onLongPress={selectImage} {...props} />
     )

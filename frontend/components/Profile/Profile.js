@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useEffect } from "react";
-import { Alert, Image, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Alert, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-navigation";
 import { styles } from "./ProfileStyles";
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -9,6 +9,7 @@ import { useIsFocused } from "@react-navigation/native";
 import { Ionicons, FontAwesome5 } from '@expo/vector-icons';
 import AuthService from '../../authentication/Auth.Service';
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import ProfilePicture from "./ProfilePicture";
 
 export default function ProfileScreen({ navigation }) {
 
@@ -86,11 +87,41 @@ export default function ProfileScreen({ navigation }) {
     const [newPassword, setNewPassword] = React.useState('');
     const [confirmPassword, setConfirmPassword] = React.useState('');
 
+    const updateUsername = async () => {
+        const userId = await AsyncStorage.getItem("userId");
+        const json = JSON.stringify({
+            username: changeUsername
+        });
+        await axios.post(`/user/update/username/${userId}`, json, { headers: { 'Content-Type': 'application/json' }}).then(async() => {
+            await AsyncStorage.removeItem("username");
+            await AsyncStorage.setItem("username", changeUsername);
+            Alert.alert("Updated!");
+        }).catch(err => {
+            Alert.alert("Action failed");
+        });
+    }
+
+    const updatePassword = async () => {
+        const userId = await AsyncStorage.getItem("userId");
+        if (newPassword === confirmPassword) {
+            const json = JSON.stringify({
+                password: confirmPassword
+            });
+            await axios.post(`/user/update/username/${userId}`, json, { headers: { 'Content-Type': 'application/json' }}).then(async() => {
+                await AsyncStorage.removeItem("username");
+                await AsyncStorage.setItem("username", changeUsername);
+                Alert.alert("Updated!");
+            }).catch(err => {
+                Alert.alert("Action failed");
+            });
+        }
+    }
+
     return (
         <SafeAreaView style={styles.container}>
             <KeyboardAwareScrollView style={{ width: '100%' }} keyboardDismissMode="on-drag" resetScrollToCoords={{ x: 0, y: 0 }}>
                 <View style={styles.header}>
-                    <Image source={{ uri: profilePicture }} style={{ width: 150, height: 150, borderRadius: 150 }} />
+                    <ProfilePicture customStyle={{ width: 150, height: 150, borderRadius: 150 }} />
                     <Text style={[styles.headerText, { color: '#fff'}]}>{username}</Text>
                 </View>
                 <View style={styles.statsContainer}>
@@ -131,7 +162,7 @@ export default function ProfileScreen({ navigation }) {
                                     clearButtonMode='always'
                                     textAlign="center"
                                 />
-                                <TouchableOpacity style={styles.confirmButton}>
+                                <TouchableOpacity style={styles.confirmButton} onPress={updateUsername}>
                                     <Text style={{ fontWeight: 'bold' }}>Confirm</Text>
                                 </TouchableOpacity>
                             </View>
@@ -161,7 +192,7 @@ export default function ProfileScreen({ navigation }) {
                                     secureTextEntry={true}
                                     textAlign="center"
                                 />
-                                <TouchableOpacity style={styles.confirmButton}>
+                                <TouchableOpacity style={styles.confirmButton} onPress={updatePassword}>
                                     <Text style={{ fontWeight: 'bold' }}>Confirm</Text>
                                 </TouchableOpacity>
                             </View>

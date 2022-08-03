@@ -1,16 +1,18 @@
 import React, { useEffect, useRef } from "react";
-import { Alert, Animated, Easing, SafeAreaView, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Alert, Animated, Easing, SafeAreaView, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
 import axios from "axios";
 import { Picker } from "@react-native-picker/picker";
 import { styles } from "../AddEventStyles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { AntDesign } from '@expo/vector-icons';
-import { countries, scoreList, epValue } from "../../../utils/lists";
+import { AntDesign, Octicons } from '@expo/vector-icons';
+import { countries, scoreList, epValue, allGenres } from "../../../utils/lists";
+import Modal from "react-native-modal";
 
 export default function AddEvent({ navigation }) {
 
     const [spinValue, setSpinValue] = React.useState(new Animated.Value(0));
+    const [open, setOpen] = React.useState(false);
 
     useEffect(() => {
         loadOnlyOnce();
@@ -39,8 +41,6 @@ export default function AddEvent({ navigation }) {
     const [selectedValue, setSelectedValue] = React.useState(0);
 
     const [other, setOther] = React.useState(false);
-
-
 
     const loadOnlyOnce = async () => {
         setUserId(await AsyncStorage.getItem("userId"));
@@ -88,6 +88,8 @@ export default function AddEvent({ navigation }) {
         inputRange: [0, 1],
         outputRange: ['0deg', '360deg']
     });
+
+    const [test, setTest] = React.useState(false);
 
     return (
         <SafeAreaView style={styles.container}>
@@ -143,13 +145,36 @@ export default function AddEvent({ navigation }) {
                     ref={textInput}
                 />
                 <Text style={styles.text}>Genres</Text>
-                <TextInput
+                {/* <TextInput
                     style={styles.textInput}
                     onChangeText={changeGenres}
                     value={genres.toString()}
                     clearButtonMode='always'
                     ref={textInput}
-                />
+                /> */}
+                <TouchableOpacity onPress={() => setOpen(!open)}>
+                    <Octicons name="multi-select" size={25} color="white" />
+                </TouchableOpacity>
+                {open ? (
+                    <Modal isVisible={open} onBackdropPress={() => setOpen(false)}>
+                        <SafeAreaView style={{ backgroundColor: '#121212', borderRadius: 5, justifyContent: 'center', alignItems: 'center' }}>
+                            <ScrollView style={{ width: '100%' }}>
+                                <View style={{ width: '100%', alignItems: 'center', justifyContent: 'center' }}>
+                                    {allGenres.map(genre => {
+                                        return (
+                                            <TouchableOpacity key={genre} 
+                                            style={[{ width: '75%', borderRadius: 10, alignItems: 'center' }, test ? {borderColor: 'white', borderStyle: 'solid', borderWidth: 2, marginTop: 10} : null]}
+                                            onPress={() => setTest(!test)}
+                                            >
+                                                <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 25 }}>{genre}</Text>
+                                            </TouchableOpacity>
+                                        )
+                                    })}
+                                </View>
+                            </ScrollView>
+                        </SafeAreaView>
+                    </Modal>
+                ) : null}
 
                 <Text style={styles.text}>Score</Text>
                 <Picker

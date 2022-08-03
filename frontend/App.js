@@ -32,7 +32,7 @@ const CustomDrawer = (props) => {
   return (
     <DrawerContentScrollView {...props}>
       <View style={styles.container}>
-        <ProfilePicture />
+        <ProfilePicture customStyle={{ width: 100, height: 100, borderRadius: 50 }} />
         <Text style={styles.text}>{username}</Text>
       </View>
       <DrawerItemList {...props} />
@@ -77,15 +77,17 @@ const App = () => {
   return (
     <NavigationContainer theme={DarkTheme} onStateChange={loadOnlyOnce}>
       <Drawer.Navigator initialRouteName='Login' screenOptions={{ headerTintColor: '#fff' }} drawerContent={props => <CustomDrawer {...props} />}>
-        <Drawer.Screen name='Profile' component={ProfileScreen}
-          options={{
-            drawerIcon: (() => (
-              <Ionicons name="person-circle-outline" size={20} color="white" />
-            )),
-            drawerActiveTintColor: '#EF0107',
-            drawerLabelStyle: { color: '#fff' },
-          }}
-        />
+        {loggedIn ? (
+          <Drawer.Screen name='Profile' component={ProfileScreen}
+            options={{
+              drawerIcon: (() => (
+                <Ionicons name="person-circle-outline" size={20} color="white" />
+              )),
+              drawerActiveTintColor: '#EF0107',
+              drawerLabelStyle: { color: '#fff' },
+            }}
+          />
+        ) : null}
         <Drawer.Screen name='List' component={TabNavList}
           options={{
             title: 'MyList',
