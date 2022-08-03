@@ -14,6 +14,7 @@ export default function ProfileScreen({ navigation }) {
 
     const isFocused = useIsFocused();
 
+    const [username, setUsername] = React.useState('');
     const [profilePicture, setProfilePicture] = React.useState(null);
     const [dramas, setDramas] = React.useState([]);
 
@@ -24,6 +25,9 @@ export default function ProfileScreen({ navigation }) {
     }, [navigation]);
 
     const loadOnlyOnce = async () => {
+        await AsyncStorage.getItem("username").then(response => {
+            setUsername(response);
+        });
         const userId = await AsyncStorage.getItem("userId");
         axios.get(`/user/image/get/${userId}`).then(response => {
             setProfilePicture(response.data.payload.profilePicture);
@@ -87,11 +91,11 @@ export default function ProfileScreen({ navigation }) {
             <KeyboardAwareScrollView style={{ width: '100%' }} keyboardDismissMode="on-drag" resetScrollToCoords={{ x: 0, y: 0 }}>
                 <View style={styles.header}>
                     <Image source={{ uri: profilePicture }} style={{ width: 150, height: 150, borderRadius: 150 }} />
-                    <Text style={styles.headerText}>test</Text>
+                    <Text style={[styles.headerText, { color: '#fff'}]}>{username}</Text>
                 </View>
                 <View style={styles.statsContainer}>
                     <View style={styles.statsHeader}>
-                        <Ionicons name="ios-stats-chart-sharp" size={20} color="white" style={{ right: 5 }} />
+                        <Ionicons name="ios-stats-chart-sharp" size={20} color="#E5E4E2" style={{ right: 5 }} />
                         <Text style={[styles.headerText, { fontSize: 25, }]}>Stats</Text>
                     </View>
                     <View style={styles.statsBody}>

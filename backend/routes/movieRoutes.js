@@ -8,6 +8,10 @@ router
     .get(movieController.getMovies)
 
 router
+    .route('/get/all/:userId')
+    .get(movieController.getMoviesByUserId)
+
+router
     .route('/add/:userId')
     .post(movieController.addMovie)
 

@@ -13,6 +13,18 @@ exports.getMovies = catchAsync(async(req, res, next) => {
     });
 });
 
+exports.getMoviesByUserId = catchAsync(async(req, res, next) => {
+
+    const newUser = new User(req.params.userId);
+
+    var result = await IMovie.getMovies(newUser);
+
+    res.status(200).send({
+        success: true,
+        payload: result
+    });
+});
+
 exports.addMovie = catchAsync(async (req, res, next) => {
 
     const newUser = new User(req.params.userId);

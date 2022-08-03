@@ -26,14 +26,14 @@ export default function MovieListScreen() {
     const [refreshing, setRefreshing] = React.useState(false);
     const [isLoggedIn, setIsLoggedIn] = React.useState(false);
 
-    const [dramas, setDramas] = React.useState([]);
+    const [movies, setMovies] = React.useState([]);
 
     const loadOnlyOnce = async () => {
         if (await AuthService.isLoggedIn()) {
             setIsLoggedIn(true);
             const userId = await AsyncStorage.getItem("userId");
-            await axios.get(`/drama/get/${userId}`).then(response => {
-                setDramas(response.data.payload);
+            await axios.get(`/movie/get/all/${userId}`).then(response => {
+                setMovies(response.data.payload);
             }).catch(err => {
                 console.log(err);
             });
@@ -47,14 +47,13 @@ export default function MovieListScreen() {
         await loadOnlyOnce().then(() => {
             setRefreshing(false);
         });
-        // wait(1000).then(() => setRefreshing(false));
     }
 
     const [open, setOpen] = React.useState(false);
     const [key, setKey] = React.useState([]);
     const openInfo = (event) => {
         setOpen(!open);
-        dramas.forEach(item => {
+        movies.forEach(item => {
             if (item.Id === event) {
                 setKey(item);
             }
@@ -62,10 +61,10 @@ export default function MovieListScreen() {
     }
 
     const [isModalVisible, setModalVisible] = React.useState(false);
-    const [dramaEntry, setDramaEntry] = React.useState([]);
+    const [entry, setEntry] = React.useState([]);
     const toggleModal = async (id) => {
-        const drama = dramas.find(x => x.Id === id);
-        setDramaEntry(drama);
+        const movie = movies.find(x => x.Id === id);
+        setEntry(movie);
         setModalVisible(true);
     }
 
@@ -87,6 +86,14 @@ export default function MovieListScreen() {
         )
     }
 
+    const time = (min) => {
+        var hours = Math.floor(min / 60);
+        var minutes = min % 60;
+        return (
+            `${hours}hr ${minutes}min`
+        )
+    }
+
     return (
         <SafeAreaView style={styles.container}>
             {isLoggedIn ? (
@@ -98,25 +105,25 @@ export default function MovieListScreen() {
                                 <Text style={styles.header}>{country.country}</Text>
                                 <View style={[styles.row, styles.borderBottom]}>
                                     <Text style={[styles.tableText, styles.title]}>Title</Text>
-                                    <Text style={[styles.tableText, styles.rest]}>Episodes</Text>
+                                    <Text style={[styles.tableText, styles.rest]}>Run time</Text>
                                     <Text style={[styles.tableText, styles.rest]}>Score</Text>
                                 </View>
-                                {dramas.map((drama) => {
-                                    if (country.country === drama.country)
+                                {movies.map((movie) => {
+                                    if (country.country === movie.country)
                                         return (
-                                            <TouchableOpacity style={styles.scrollview} key={drama.Id} onLongPress={() => openInfo(drama.Id)}>
+                                            <TouchableOpacity style={styles.scrollview} key={movie.Id} onLongPress={() => openInfo(movie.Id)}>
                                                 <View style={[styles.row, styles.rowHeight]}>
-                                                    <Text style={[styles.tableText, styles.title]}>{drama.title}</Text>
-                                                    <Text style={[styles.tableText, styles.rest]}>{drama.episodes}</Text>
+                                                    <Text style={[styles.tableText, styles.title]}>{movie.title}</Text>
+                                                    <Text style={[styles.tableText, styles.rest]}>{time(movie.duration)}</Text>
                                                     <Text style={[styles.score, styles.rest]}>{
-                                                        drama.score !== null ? (
-                                                            drama.score
+                                                        movie.score !== null ? (
+                                                            movie.score
                                                         ) : "N/A"
                                                     }</Text>
                                                 </View>
                                                 {open ? (
-                                                    drama.Id === key.Id ? (
-                                                        <AdditionalInfo id={drama.Id} />
+                                                    movie.Id === key.Id ? (
+                                                        <AdditionalInfo id={movie.Id} />
                                                     ) : null
                                                 ) : null}
                                             </TouchableOpacity>
@@ -128,7 +135,7 @@ export default function MovieListScreen() {
                 </ScrollView>
             ) : <Text style={styles.text}>Please log in to view your list !</Text>}
             { isModalVisible ? (
-                <Popup drama={dramaEntry} toggle={setModalVisible} isVisible={isModalVisible} onBackdropPress={() => setModalVisible(false)}/>
+                <Popup drama={entry} toggle={setModalVisible} isVisible={isModalVisible} onBackdropPress={() => setModalVisible(false)}/>
             ) : null}
         </SafeAreaView>
     )

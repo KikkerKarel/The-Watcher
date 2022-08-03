@@ -9,7 +9,7 @@ router
 
 router
     .route('/register')
-    .get(userController.register)
+    .post(userController.register)
 
 router
     .route('/login')
@@ -23,4 +23,12 @@ router
     .route('/image/get/:userId')
     .get(userController.getProfilePicture)
 
+router
+    .route('/update/username/:userId')
+    .put(userController.updateUsername)
+
+router
+    .route('/update/password/:userId')
+    .put(userController.updatePassword)
+    
 module.exports = router;

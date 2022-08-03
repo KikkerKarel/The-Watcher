@@ -80,7 +80,7 @@ export default function ListScreen() {
                 </View>
                 <View style={{ flex: 0.5, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                     <TouchableOpacity style={{ right: 20, flexDirection: 'row' }} onPress={() => toggleModal(props.id)}>
-                        <AntDesign name="edit" size={25} color="white" />
+                        <AntDesign name="edit" size={25} color="#E5E4E2" />
                     </TouchableOpacity>
                 </View>
             </SafeAreaView>
@@ -96,7 +96,7 @@ export default function ListScreen() {
                         return (
                             <View style={styles.scroll} key={country.country}>
                                 <Text style={styles.header}>{country.country}</Text>
-                                <View style={styles.row}>
+                                <View style={[styles.row, { marginTop: '1%'}]}>
                                     <Text style={[styles.tableText, styles.title]}>Title</Text>
                                     <Text style={[styles.tableText, styles.rest]}>Episodes</Text>
                                     <Text style={[styles.tableText, styles.rest]}>Score</Text>

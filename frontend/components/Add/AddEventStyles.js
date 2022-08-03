@@ -15,7 +15,7 @@ export const styles = StyleSheet.create({
         color: '#fff'
     },
     text: {
-        color: 'white',
+        color: '#fff',
         fontSize: 25,
         fontWeight: 'bold',
         marginTop: '5%'
@@ -30,7 +30,7 @@ export const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     button: {
-        color: 'white',
+
         backgroundColor: 'white',
         marginTop: '10%',
         width: '30%',

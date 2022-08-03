@@ -69,3 +69,27 @@ exports.getProfilePicture = catchAsync(async(req, res, next) => {
         payload: result
     });
 });
+
+exports.updateUsername = catchAsync(async(req, res, next) => {
+
+    var newUser = new User(req.params.userId, req.body.username);
+
+    var result = await IUser.updateUsername(newUser);
+
+    res.status(200).send({
+        success: true,
+        payload: result
+    });
+});
+
+exports.updatePassword = catchAsync(async(req, res, next) => {
+
+    var newUser = new User(req.params.userId, null, req.body.password);
+
+    var result = await IUser.updatePassword(newUser);
+
+    res.status(200).send({
+        success: true,
+        payload: result
+    });
+});

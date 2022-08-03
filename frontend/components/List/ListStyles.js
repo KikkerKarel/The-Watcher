@@ -4,17 +4,15 @@ export const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-        backgroundColor: '#121212'
+        backgroundColor: '#121212',
     },
     scroll: {
-        top: 10,
         marginTop: '5%',
         width: 400,
     },
     scrollview: {
         flexDirection: 'column',
         backgroundColor: '#4A0000',
-        // backgroundColor: 'transparent',
         overflow: 'hidden',
         textAlign: 'center',
         borderStyle: 'solid',
@@ -24,12 +22,12 @@ export const styles = StyleSheet.create({
 
     },
     header: {
-        color: '#fff',
+        color: '#E5E4E2',
         marginLeft: '2%',
         fontSize: 25,
     },
     text: {
-        color: '#fff',
+        color: '#E5E4E2',
         fontSize: 15,
         left: 10
     },
@@ -41,7 +39,7 @@ export const styles = StyleSheet.create({
         elevation: 20
     },
     score: {
-        color: '#fff',
+        color: '#E5E4E2',
         fontSize: 20,
         fontWeight: 'bold',
     },
@@ -50,13 +48,13 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         flex: 1,
         justifyContent: 'space-between',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     rowHeight: {
-        height: 40
+        height: 60
     },
     tableText: {
-        color: '#fff',
+        color: '#E5E4E2',
         fontSize: 15,
     },
     title: {

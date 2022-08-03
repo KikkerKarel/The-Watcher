@@ -16,20 +16,16 @@ exports.register = async (user) => {
     const salt = await bcrypt.genSaltSync(10);
     const passwordHash = await bcrypt.hashSync(user.password, salt);
 
-    var check = (await request.query(`SELECT * FROM Profile`)).recordsets[0];
+    var response = (await request.query(`SELECT * FROM Profile`)).recordsets[0];
+
     let result;
-    if (check.length > 0) {
-        check.forEach(async element => {
-            if (element.username !== user.username) {
-                await request.query(`INSERT INTO Profile (username, passwordHash) VALUES ('${user.username}', '${passwordHash}')`);
-                result = true;
-            }
-            else {
-                result = false;
-            }
-        });
+    const check = !!response.find(x => { return x.username === user.username});
+    if (!check) {
+        await request.query(`INSERT INTO Profile (username, passwordHash) VALUES ('${user.username}', '${passwordHash}')`);
+        result = true;
+    } else {
+        result = false;
     }
-    await request.query(`INSERT INTO Profile (username, passwordHash) VALUES ('${user.username}', '${passwordHash}')`);
 
     return result;
 }
@@ -68,4 +64,39 @@ exports.getProfilePicture = async (user) => {
     const result = (await request.query(`SELECT profilePicture FROM Profile WHERE Id='${parseInt(user.userId)}'`)).recordset;
 
     return result[0];
+}
+
+exports.updateUsername = async (user) => {
+
+    const userId = parseInt(user.userId);
+
+    const response = (await request.query(`SELECT username FROM Profile`)).recordset;
+
+    let result;
+    const check = !!response.find(x => { return x.username === user.username });
+    if (!check) {
+        await request.query(`UPDATE Profile SET username='${user.username}' WHERE Id='${userId}'`);
+        result = "success!";
+    } else {
+        result = "failed";
+    }
+
+    return result;
+}
+
+exports.updatePassword = async (user) => {
+
+    const userId = parseInt(user.userId);
+
+    const salt = bcrypt.genSaltSync(10);
+    const passwordHash = bcrypt.hashSync(user.password, salt);
+
+    let result;
+    await request.query(`UPDATE Profile SET passwordHash='${passwordHash}' WHERE Id='${userId}'`).then(() => {
+        result = "Successfully updated!";
+    }).catch(err => {
+        result = err;
+    });
+
+    return result;
 }

@@ -17,7 +17,7 @@ export const styles = StyleSheet.create({
     headerText: {
         fontSize: 30,
         fontWeight: 'bold',
-        color: '#fff'
+        color: '#E5E4E2'
     },
     statsContainer: {
         backgroundColor: '#4A0000',
@@ -31,7 +31,7 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         width: '100%',
         height: '25%',
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
     statsBody: {
         width: '100%',
@@ -48,13 +48,11 @@ export const styles = StyleSheet.create({
         // alignItems: 'center',
     },
     statsText: {
-        color: '#fff',
+        color: '#E5E4E2',
         fontSize: 15,
         left: 10
     },
     settingsContainer: {
-        // width: '100%',
-        // backgroundColor: 'white',
         height: 200,
         flexDirection: 'row',
         justifyContent: 'space-between'

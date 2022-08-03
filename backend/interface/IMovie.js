@@ -10,6 +10,15 @@ exports.getMovies = async() => {
     return movies[0];
 }
 
+exports.getMoviesByUserId = async(user) => {
+
+    const userId = parseInt(user.userId);
+
+    var result = (await request.query(`SELECT * FROM Movie WHERE userId='${userId}`)).recordsets;
+
+    return result[0];
+}
+
 exports.addMovie = async(user, movie) => {
     
     const userId = parseInt(user.userId);
