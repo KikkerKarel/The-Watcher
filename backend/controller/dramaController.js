@@ -15,7 +15,7 @@ exports.getDrama = catchAsync(async(req, res, next) => {
 
 exports.updateDramaById = catchAsync(async(req, res, next) => {
     
-    const newDrama = new Drama(req.params.id, null, req.body.title, req.body.country, req.body.episodes, req.body.duration, req.body.genres, req.body.score);
+    const newDrama = new Drama(req.params.id, req.body.title, req.body.country, req.body.episodes, req.body.duration, req.body.genres, req.body.score);
 
     var result = await IDrama.updateDramaById(newDrama);
 
@@ -39,9 +39,10 @@ exports.getDramasByUserId = catchAsync(async(req, res, next) => {
 
 exports.addDrama = catchAsync(async(req, res, next) => {
 
-    newDrama = new Drama(null, req.body.userId, req.body.title, req.body.country, req.body.episodes, req.body.duration, req.body.genres, req.body.score);
+    const newUser = new User(req.params.userId);
+    const newDrama = new Drama(null, req.body.title, req.body.country, req.body.episodes, req.body.duration, req.body.genres, req.body.score);
 
-    var result = await IDrama.addDrama(newDrama);
+    var result = await IDrama.addDrama(newUser, newDrama);
 
     res.status(200).send({
         success: true,

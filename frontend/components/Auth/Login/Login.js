@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, TextInput, SafeAreaView, TouchableOpacity } from "react-native";
+import { Text, TextInput, SafeAreaView, TouchableOpacity } from "react-native";
 import AuthService from "../../../authentication/Auth.Service";
 import { styles } from "./LoginStyles";
 

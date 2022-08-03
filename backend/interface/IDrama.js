@@ -8,11 +8,7 @@ exports.getDrama = async () => {
 
     var dramas = (await request.query(`SELECT * FROM Drama`)).recordsets;
     
-    var result;
-    dramas.forEach((element) => {
-        result = element;
-    });
-    return result;
+    return dramas[0];
 }
 
 exports.updateDramaById = async (drama) => {
@@ -33,7 +29,8 @@ exports.updateDramaById = async (drama) => {
 
 exports.getDramasByUserId = async (user) => {
 
-    var dramas = (await request.query(`SELECT * FROM Drama WHERE userId='${user.userId}'`)).recordsets;
+    const userId = parseInt(user.userId);
+    var dramas = (await request.query(`SELECT * FROM Drama WHERE userId='${userId}'`)).recordsets;
     
     var result;
     dramas.forEach((element) => {
@@ -42,10 +39,11 @@ exports.getDramasByUserId = async (user) => {
     return result;
 }
 
-exports.addDrama = async (drama) => {
+exports.addDrama = async (user, drama) => {
 
+    const userId = parseInt(user.userId);
     const result = await request.query(`INSERT INTO Drama (userId, title, country, episodes, duration, genres, score) 
-    VALUES ('${drama.userId}','${drama.title}','${drama.country}','${drama.episodes}','${drama.duration}','${drama.genres}', '${drama.score}')`);
+    VALUES ('${userId}','${drama.title}','${drama.country}','${drama.episodes}','${drama.duration}','${drama.genres}', '${drama.score}')`);
 
     return result;
 }

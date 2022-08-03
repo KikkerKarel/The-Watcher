@@ -16,7 +16,7 @@ router
     .get(dramaController.getDramasByUserId);
 
 router
-    .route('/add')
+    .route('/add/:userId')
     .post(dramaController.addDrama);
 
 

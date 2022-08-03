@@ -6,12 +6,7 @@ import { styles } from "../AddEventStyles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { AntDesign } from '@expo/vector-icons';
-
-
-
-const scoreList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-
-const epValue = ['8', '12', '16', '20', '32', 'Other'];
+import { countries, scoreList, epValue } from "../../../utils/lists";
 
 export default function AddEvent({ navigation }) {
 
@@ -65,7 +60,6 @@ export default function AddEvent({ navigation }) {
     const textInput = useRef('');
     const AddToList = async () => {
         const json = JSON.stringify({
-            userId: parseInt(userId),
             title: title,
             country: country,
             episodes: parseInt(episodes),
@@ -73,7 +67,7 @@ export default function AddEvent({ navigation }) {
             genres: genres,
             score: selectedValue
         });
-        await axios.post("/drama/add", json, { headers: { 'Content-Type': 'application/json' } }).then(response => {
+        await axios.post(`/drama/add/${userId}`, json, { headers: { 'Content-Type': 'application/json' } }).then(response => {
             console.log(response.data);
             setLoading(true);
             spin();
@@ -107,13 +101,17 @@ export default function AddEvent({ navigation }) {
                     clearButtonMode='always'
                 />
                 <Text style={styles.text}>Country</Text>
-                <TextInput
-                    style={styles.textInput}
-                    onChangeText={changeCountry}
-                    value={country}
-                    clearButtonMode='always'
-                    ref={textInput}
-                />
+                <Picker
+                    selectedValue={country}
+                    style={styles.picker}
+                    onValueChange={(itemValue) => changeCountry(itemValue)}
+                >
+                    {countries.map((item) => {
+                        return (
+                            <Picker.Item color="#fff" label={item.country} value={item.country} key={item.country} />
+                        )
+                    })}
+                </Picker>
                 <Text style={styles.text}>Episodes</Text>
 
                 <View style={[styles.episodes, other ? { flex: 1 } : { flex: 0.5 }]}>

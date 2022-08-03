@@ -6,11 +6,7 @@ import { Picker } from "@react-native-picker/picker";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { MaterialIcons } from '@expo/vector-icons';
 import axios from 'axios';
-
-
-const scoreList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-
-// const epValue = ['8', '12', '16', '20', '32', 'Other'];
+import { scoreList } from "../../utils/lists";
 
 const Popup = (props) => {
 

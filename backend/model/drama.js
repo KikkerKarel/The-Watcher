@@ -1,9 +1,8 @@
 module.exports = class Drama {
 
-    constructor(Id, userId, title, country, episodes, duration, genres, score)
+    constructor(Id, title, country, episodes, duration, genres, score)
     {
         this.Id = Id;
-        this.userId = userId;
         this.title = title;
         this.country = country;
         this.episodes = episodes;
@@ -13,6 +12,6 @@ module.exports = class Drama {
     }
 
     display(){
-        console.log(this.Id, this.userId, this.title, this.country, this.episodes, this.duration, this.genres, this.score);
+        console.log(this.Id, this.title, this.country, this.episodes, this.duration, this.genres, this.score);
     }
 }

@@ -7,24 +7,7 @@ import { useIsFocused } from "@react-navigation/native";
 import AuthService from "../../authentication/Auth.Service";
 import { AntDesign } from '@expo/vector-icons';
 import Popup from "../Modal/Popup";
-
-var countries = [
-    {
-        country: 'South Korea'
-    },
-    {
-        country: 'China'
-    },
-    {
-        country: 'Japan'
-    },
-    {
-        country: 'Taiwan'
-    },
-    {
-        country: 'Thailand'
-    },
-];
+import { countries } from "../../utils/lists";
 
 // const wait = (timeout) => {
 //     return new Promise(resolve => setTimeout(resolve, timeout));
@@ -113,7 +96,7 @@ export default function ListScreen() {
                         return (
                             <View style={styles.scroll} key={country.country}>
                                 <Text style={styles.header}>{country.country}</Text>
-                                <View style={[styles.row, styles.borderBottom]}>
+                                <View style={styles.row}>
                                     <Text style={[styles.tableText, styles.title]}>Title</Text>
                                     <Text style={[styles.tableText, styles.rest]}>Episodes</Text>
                                     <Text style={[styles.tableText, styles.rest]}>Score</Text>

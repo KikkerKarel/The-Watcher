@@ -7,24 +7,7 @@ import { useIsFocused } from "@react-navigation/native";
 import AuthService from "../../authentication/Auth.Service";
 import { AntDesign } from '@expo/vector-icons';
 import Popup from "../Modal/Popup";
-
-var countries = [
-    {
-        country: 'South Korea'
-    },
-    {
-        country: 'China'
-    },
-    {
-        country: 'Japan'
-    },
-    {
-        country: 'Taiwan'
-    },
-    {
-        country: 'Thailand'
-    },
-];
+import { countries } from "../../utils/lists";
 
 // const wait = (timeout) => {
 //     return new Promise(resolve => setTimeout(resolve, timeout));

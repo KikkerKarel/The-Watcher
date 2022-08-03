@@ -20,6 +20,7 @@ export const styles = StyleSheet.create({
         borderStyle: 'solid',
         borderWidth: 0.5,
         borderBottomColor: '#D3D3D3',
+        borderRadius: 5
 
     },
     header: {
@@ -65,10 +66,5 @@ export const styles = StyleSheet.create({
     rest: {
         width: '20%',
         textAlign: 'center'
-    },
-    borderBottom: {
-        borderBottomColor: '#fff',
-        borderStyle: 'solid',
-        borderBottomWidth: 1
     },
 });

@@ -6,8 +6,7 @@ import { styles } from "../AddEventStyles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { AntDesign } from '@expo/vector-icons';
-
-const scoreList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+import { countries, scoreList } from "../../../utils/lists";
 
 export default function AddEventMovie({ navigation }) {
 
@@ -87,13 +86,17 @@ export default function AddEventMovie({ navigation }) {
                 />
 
                 <Text style={styles.text}>Country</Text>
-                <TextInput
-                    style={styles.textInput}
-                    onChangeText={changeCountry}
-                    value={country}
-                    clearButtonMode='always'
-                    ref={textInput}
-                />
+                <Picker
+                    selectedValue={country}
+                    style={styles.picker}
+                    onValueChange={(itemValue) => changeCountry(itemValue)}
+                >
+                    {countries.map((item) => {
+                        return (
+                            <Picker.Item color="#fff" label={item.country} value={item.country} key={item.country} />
+                        )
+                    })}
+                </Picker>
 
                 <Text style={styles.text}>Duration</Text>
                 <TextInput
