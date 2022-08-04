@@ -55,10 +55,8 @@ export const styles = StyleSheet.create({
         flex: 1,
         fontSize: 20
     },
-    card: {
-        padding: 10,
-        margin: 5,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-      },
+    selectedGenres: {
+        fontSize: 15,
+        color: "white",
+    }
 });

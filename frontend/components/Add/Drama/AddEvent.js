@@ -36,7 +36,7 @@ export default function AddEvent({ navigation }) {
     const [country, changeCountry] = React.useState("");
     const [episodes, changeEpisodes] = React.useState();
     const [duration, changeDuration] = React.useState();
-    const [genres, changeGenres] = React.useState([""]);
+    const [genres, changeGenres] = React.useState([]);
 
     const [selectedValue, setSelectedValue] = React.useState(0);
 
@@ -75,7 +75,7 @@ export default function AddEvent({ navigation }) {
             changeCountry('');
             changeEpisodes('');
             changeDuration('');
-            changeGenres('');
+            changeGenres([]);
             setSelectedValue(0);
         }).catch(err => {
             console.log(err);
@@ -99,6 +99,25 @@ export default function AddEvent({ navigation }) {
         });
         setSelectedItems(temp);
     };
+
+    const handleConfirmGenres = () => {
+        var list = genres;
+        selectedItems.map((item) => {
+            if (item.isChecked) {
+                const check = !!list.find(x => x === item.genre);
+                if (!check) {
+                    list.push(item.genre);
+                }
+            } else {
+                var index = genres.indexOf(item.genre);
+                if (index !== -1) {
+                    genres.splice(index, 1);
+                }
+            }
+        });
+        changeGenres(list);
+        setOpen(false);
+    }
 
     return (
         <SafeAreaView style={styles.container}>
@@ -154,16 +173,20 @@ export default function AddEvent({ navigation }) {
                     ref={textInput}
                 />
                 <Text style={styles.text}>Genres</Text>
-                {/* <TextInput
-                    style={styles.textInput}
-                    onChangeText={changeGenres}
-                    value={genres.toString()}
-                    clearButtonMode='always'
-                    ref={textInput}
-                /> */}
                 <TouchableOpacity onPress={() => setOpen(!open)}>
                     <Octicons name="multi-select" size={25} color="white" />
                 </TouchableOpacity>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', width: '75%', flexWrap: 'wrap' }}>
+                    {genres.map((genre) => {
+                        return (
+                            <View style={{ flexDirection: 'row', marginTop: '5%', alignItems: 'center' }}>
+                                <Octicons name="dot-fill" size={15} style={{ marginRight: 2}} color="white" />
+                                <Text key={genre} style={styles.selectedGenres}>{genre}</Text>
+                            </View>
+                        )
+                    })}
+                </View>
+
                 {open ? (
                     <Modal isVisible={open} onBackdropPress={() => setOpen(false)}>
                         <SafeAreaView style={{ backgroundColor: '#121212', borderRadius: 5, justifyContent: 'center', alignItems: 'center' }}>
@@ -182,6 +205,9 @@ export default function AddEvent({ navigation }) {
                                             </TouchableOpacity>
                                         )
                                     })}
+                                    <TouchableOpacity onPress={handleConfirmGenres}>
+                                        <Text style={styles.text}>Confirm</Text>
+                                    </TouchableOpacity>
                                 </View>
                             </ScrollView>
                         </SafeAreaView>
@@ -192,7 +218,7 @@ export default function AddEvent({ navigation }) {
                 <Picker
                     selectedValue={selectedValue}
                     style={styles.picker}
-                    onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
+                    onValueChange={(itemValue) => setSelectedValue(itemValue)}
                 >
                     {scoreList.map((score) => {
                         return (
