@@ -9,9 +9,6 @@ import { AntDesign } from '@expo/vector-icons';
 import Popup from "../Modal/List/Popup";
 import { countries } from "../../utils/lists";
 
-// const wait = (timeout) => {
-//     return new Promise(resolve => setTimeout(resolve, timeout));
-// }
 
 export default function MovieListScreen() {
 
@@ -73,9 +70,8 @@ export default function MovieListScreen() {
             <SafeAreaView style={{ flexDirection: 'row' }}>
                 <View style={{ flex: 1 }}>
                     <Text style={styles.text}>Country: {key.country}</Text>
-                    <Text style={styles.text}>Episodes: {key.episodes}</Text>
-                    <Text style={styles.text}>Duration: {key.duration} min</Text>
-                    <Text style={styles.text}>Genre(s): {key.genres}</Text>
+                    <Text style={styles.text}>Run time: {key.duration} min</Text>
+                    <Text style={styles.text}>Genre(s): {key.genres.split(',').join(', ')}</Text>
                 </View>
                 <View style={{ flex: 0.5, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                     <TouchableOpacity style={{ right: 20, flexDirection: 'row' }} onPress={() => toggleModal(props.id)}>
@@ -127,15 +123,15 @@ export default function MovieListScreen() {
                                                     ) : null
                                                 ) : null}
                                             </TouchableOpacity>
-                                        )
+                                        );
                                 })}
                             </View>
-                        )
+                        );
                     })}
                 </ScrollView>
             ) : <Text style={styles.text}>Please log in to view your list !</Text>}
             { isModalVisible ? (
-                <Popup drama={entry} toggle={setModalVisible} isVisible={isModalVisible} onBackdropPress={() => setModalVisible(false)}/>
+                <Popup entry={entry} listType="movie" toggle={setModalVisible} isVisible={isModalVisible} onBackdropPress={() => setModalVisible(false)}/>
             ) : null}
         </SafeAreaView>
     )

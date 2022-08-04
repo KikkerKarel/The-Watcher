@@ -4,7 +4,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import React from "react";
 import { styles } from "../ModalStyles";
 
-const EpModal = (props) => {
+const GenreModal = (props) => {
 
     const [genres, changeGenres] = React.useState([]);
 
@@ -66,4 +66,4 @@ const EpModal = (props) => {
     )
 }
 
-export default EpModal;
+export default GenreModal;

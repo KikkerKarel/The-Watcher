@@ -9,10 +9,6 @@ import { AntDesign } from '@expo/vector-icons';
 import Popup from "../Modal/List/Popup";
 import { countries } from "../../utils/lists";
 
-// const wait = (timeout) => {
-//     return new Promise(resolve => setTimeout(resolve, timeout));
-// }
-
 export default function ListScreen() {
 
     const isFocused = useIsFocused();
@@ -47,7 +43,6 @@ export default function ListScreen() {
         await loadOnlyOnce().then(() => {
             setRefreshing(false);
         });
-        // wait(1000).then(() => setRefreshing(false));
     }
 
     const [open, setOpen] = React.useState(false);
@@ -120,15 +115,15 @@ export default function ListScreen() {
                                                     ) : null
                                                 ) : null}
                                             </TouchableOpacity>
-                                        )
+                                        );
                                 })}
                             </View>
-                        )
+                        );
                     })}
                 </ScrollView>
             ) : <Text style={styles.text}>Please log in to view your list !</Text>}
             { isModalVisible ? (
-                <Popup drama={dramaEntry} toggle={setModalVisible} isVisible={isModalVisible} onBackdropPress={() => setModalVisible(false)}/>
+                <Popup entry={dramaEntry} listType="drama" toggle={setModalVisible} isVisible={isModalVisible} onBackdropPress={() => setModalVisible(false)}/>
             ) : null}
         </SafeAreaView>
     )

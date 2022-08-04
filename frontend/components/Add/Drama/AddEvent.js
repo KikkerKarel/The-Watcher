@@ -7,7 +7,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { AntDesign, Octicons } from '@expo/vector-icons';
 import { countries, scoreList, epValue, allGenres } from "../../../utils/lists";
-import EpModal from "../../Modal/Add/EpisodesModal";
+import GenreModal from "../../Modal/Add/GenreModal";
 
 export default function AddEvent({ navigation }) {
 
@@ -159,7 +159,7 @@ export default function AddEvent({ navigation }) {
                 </View>
 
                 {open ? (
-                    <EpModal
+                    <GenreModal
                         genreList={changeGenres}
                         selectedItems={selectedItems}
                         setSelectedItems={setSelectedItems}
