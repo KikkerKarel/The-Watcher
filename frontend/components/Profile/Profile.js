@@ -26,19 +26,17 @@ export default function ProfileScreen({ navigation }) {
     }, [navigation]);
 
     const loadOnlyOnce = async () => {
-        await AsyncStorage.getItem("username").then(response => {
-            setUsername(response);
-        });
-        const userId = await AsyncStorage.getItem("userId");
-        axios.get(`/user/image/get/${userId}`).then(response => {
-            setProfilePicture(response.data.payload.profilePicture);
-        }).catch(err => {
-            console.log(err);
-        });
-
-
         if (await AuthService.isLoggedIn()) {
+            await AsyncStorage.getItem("username").then(response => {
+                setUsername(response);
+            });
             const userId = await AsyncStorage.getItem("userId");
+            axios.get(`/user/image/get/${userId}`).then(response => {
+                setProfilePicture(response.data.payload.profilePicture);
+            }).catch(err => {
+                console.log(err);
+            });
+
             await axios.get(`/drama/get/${userId}`).then(response => {
                 setDramas(response.data.payload);
             }).catch(err => {

@@ -5,12 +5,15 @@ import { Picker } from "@react-native-picker/picker";
 import { styles } from "../AddEventStyles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { AntDesign } from '@expo/vector-icons';
-import { countries, scoreList } from "../../../utils/lists";
+import { AntDesign, Octicons } from '@expo/vector-icons';
+import { countries, scoreList, allGenres } from "../../../utils/lists";
+import GenreModal from "../../Modal/Add/GenreModal";
 
 export default function AddEventMovie({ navigation }) {
 
     const [spinValue, setSpinValue] = React.useState(new Animated.Value(0));
+    const [open, setOpen] = React.useState(false);
+    const [selectedItems, setSelectedItems] = React.useState(allGenres);
 
     useEffect(() => {
         loadOnlyOnce();
@@ -33,7 +36,7 @@ export default function AddEventMovie({ navigation }) {
     const [title, changeTitle] = React.useState("");
     const [country, changeCountry] = React.useState("");
     const [duration, changeDuration] = React.useState();
-    const [genres, changeGenres] = React.useState([""]);
+    const [genres, changeGenres] = React.useState([]);
 
     const [selectedValue, setSelectedValue] = React.useState(0);
 
@@ -45,27 +48,26 @@ export default function AddEventMovie({ navigation }) {
     const textInput = useRef('');
     const AddToList = async () => {
         const json = JSON.stringify({
-            userId: parseInt(userId),
             title: title,
             country: country,
             duration: parseInt(duration),
             genres: genres,
             score: selectedValue
         });
-        // await axios.post("/drama/add", json, { headers: { 'Content-Type': 'application/json' } }).then(response => {
-        //     console.log(response.data);
-        //     setLoading(true);
-        //     spin();
-        //     changeTitle('');
-        //     changeCountry('');
-        //     changeDuration('');
-        //     changeGenres('');
-        //     setSelectedValue(0);
-        // }).catch(err => {
-        //     console.log(err);
-        // }).finally(() => {
-        //     setLoading(false);
-        // });
+        await axios.post(`/movie/add/${userId}`, json, { headers: { 'Content-Type': 'application/json' } }).then(response => {
+            console.log(response.data);
+            setLoading(true);
+            spin();
+            changeTitle('');
+            changeCountry('');
+            changeDuration('');
+            changeGenres([]);
+            setSelectedValue(0);
+        }).catch(err => {
+            console.log(err);
+        }).finally(() => {
+            setLoading(false);
+        });
     }
 
     const spinning = spinValue.interpolate({
@@ -107,19 +109,36 @@ export default function AddEventMovie({ navigation }) {
                     ref={textInput}
                 />
                 <Text style={styles.text}>Genres</Text>
-                <TextInput
-                    style={styles.textInput}
-                    onChangeText={changeGenres}
-                    value={genres.toString()}
-                    clearButtonMode='always'
-                    ref={textInput}
-                />
+                <TouchableOpacity onPress={() => setOpen(!open)}>
+                    <Octicons name="multi-select" size={25} color="white" />
+                </TouchableOpacity>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', width: '75%', flexWrap: 'wrap' }}>
+                    {genres.map((genre) => {
+                        return (
+                            <View key={genre} style={{ flexDirection: 'row', marginTop: '5%', alignItems: 'center' }}>
+                                <Octicons name="dot-fill" size={15} style={{ marginRight: 2 }} color="white" />
+                                <Text style={styles.selectedGenres}>{genre}</Text>
+                            </View>
+                        )
+                    })}
+                </View>
+
+                {open ? (
+                    <GenreModal
+                        genreList={changeGenres}
+                        selectedItems={selectedItems}
+                        setSelectedItems={setSelectedItems}
+                        toggle={setOpen}
+                        isVisible={open}
+                        onBackdropPress={() => setOpen(false)}
+                    />
+                ) : null}
 
                 <Text style={styles.text}>Score</Text>
                 <Picker
                     selectedValue={selectedValue}
                     style={styles.picker}
-                    onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
+                    onValueChange={(itemValue) => setSelectedValue(itemValue)}
                 >
                     {scoreList.map((score) => {
                         return (

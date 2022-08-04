@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Text, TextInput, SafeAreaView, TouchableOpacity } from "react-native";
 import AuthService from "../../../authentication/Auth.Service";
 import { styles } from "./LoginStyles";
@@ -7,6 +7,10 @@ export default function LoginScreen({ navigation }) {
 
     const [username, setUsername] = React.useState("");
     const [password, setPassword] = React.useState("");
+
+    useEffect(() => {
+
+    }, [navigation]);
 
     const onPress = async () => {
         await AuthService.login(username, password).then(data => {

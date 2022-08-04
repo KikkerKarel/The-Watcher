@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView } from "react-native";
 import AuthService from "../../../authentication/Auth.Service";
 
@@ -5,7 +6,7 @@ export default function LogoutScreen({ navigation }) {
 
     const logout = async () => {
         await AuthService.logout().then(() => {
-            navigation.navigate('Login');
+            navigation.navigate('Profile');
         });
     }
 

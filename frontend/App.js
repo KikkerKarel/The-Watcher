@@ -7,12 +7,13 @@ import AuthService from './authentication/Auth.Service';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
 import LogoutScreen from './components/Auth/Logout/Logout';
 import { MaterialIcons, Ionicons } from '@expo/vector-icons';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ProfilePicture from './components/Profile/ProfilePicture';
 import ProfileScreen from './components/Profile/Profile';
 import TabNavList from './components/Tab/TabNavList';
 import TabNavEntry from './components/Tab/TabNavEntry';
+import RegisterScreen from './components/Auth/Register/Register';
 
 
 const Drawer = createDrawerNavigator();
@@ -37,6 +38,15 @@ const CustomDrawer = (props) => {
       </View>
       <DrawerItemList {...props} />
 
+      <Drawer.Screen name='Logout' component={LogoutScreen}
+        options={{
+          drawerIcon: (() => (
+            <MaterialIcons name="logout" size={20} color="white" />
+          )),
+          drawerActiveTintColor: '#EF0107',
+          drawerLabelStyle: { color: '#fff' }
+        }}
+      />
     </DrawerContentScrollView>
   )
 }
@@ -56,6 +66,7 @@ const styles = StyleSheet.create({
   }
 });
 
+
 const App = () => {
 
   const [loggedIn, setIsLoggedIn] = React.useState(false);
@@ -70,7 +81,8 @@ const App = () => {
     } else {
       setIsLoggedIn(false);
     }
-  }
+  };
+
 
   axios.defaults.baseURL = "http://192.168.178.227:5000";
 
@@ -107,15 +119,6 @@ const App = () => {
             drawerLabelStyle: { color: '#fff' }
           }}
         />
-        <Drawer.Screen name='Login' component={LoginScreen}
-          options={{
-            drawerIcon: (() => (
-              <MaterialIcons name="login" size={20} color="white" />
-            )),
-            drawerActiveTintColor: '#EF0107',
-            drawerLabelStyle: { color: '#fff' },
-          }}
-        />
         {loggedIn ? (
           <Drawer.Screen name='Logout' component={LogoutScreen}
             options={{
@@ -126,7 +129,28 @@ const App = () => {
               drawerLabelStyle: { color: '#fff' }
             }}
           />
-        ) : null}
+        ) :
+          <>
+            <Drawer.Screen name='Register' component={RegisterScreen}
+              options={{
+                drawerIcon: (() => (
+                  <MaterialIcons name="person-add-alt-1" size={20} color="white" />
+                )),
+                drawerActiveTintColor: '#EF0107',
+                drawerLabelStyle: { color: '#fff' }
+              }}
+            />
+            <Drawer.Screen name='Login' component={LoginScreen}
+              options={{
+                drawerIcon: (() => (
+                  <MaterialIcons name="login" size={20} color="white" />
+                )),
+                drawerActiveTintColor: '#EF0107',
+                drawerLabelStyle: { color: '#fff' },
+              }}
+            />
+          </>
+        }
       </Drawer.Navigator>
     </NavigationContainer>
   )

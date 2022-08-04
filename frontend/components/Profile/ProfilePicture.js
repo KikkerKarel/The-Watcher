@@ -18,7 +18,7 @@ const ProfilePicture = (props) => {
         await axios.get(`/user/image/get/${userId}`).then(response => {
             setProfilePicture(response.data.payload.profilePicture);
         }).catch(err => {
-            console.log(err);
+            // console.log(err);
             setProfilePicture(null);
         });
     }
