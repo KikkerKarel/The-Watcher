@@ -1,11 +1,11 @@
-import React, { useEffect, useRef } from "react";
-import { Alert, Animated, Easing, SafeAreaView, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
+import React, { useEffect, useRef, useState } from "react";
+import { Alert, Animated, Easing, FlatList, SafeAreaView, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
 import axios from "axios";
 import { Picker } from "@react-native-picker/picker";
 import { styles } from "../AddEventStyles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { AntDesign, Octicons } from '@expo/vector-icons';
+import { AntDesign, Octicons, FontAwesome5 } from '@expo/vector-icons';
 import { countries, scoreList, epValue, allGenres } from "../../../utils/lists";
 import Modal from "react-native-modal";
 
@@ -89,7 +89,16 @@ export default function AddEvent({ navigation }) {
         outputRange: ['0deg', '360deg']
     });
 
-    const [test, setTest] = React.useState(false);
+    const [selectedItems, setSelectedItems] = useState(allGenres);
+    const handleGenres = (id) => {
+        let temp = selectedItems.map((item) => {
+            if (id === item.id) {
+                return { ...item, isChecked: !item.isChecked };
+            }
+            return item;
+        });
+        setSelectedItems(temp);
+    };
 
     return (
         <SafeAreaView style={styles.container}>
@@ -158,15 +167,18 @@ export default function AddEvent({ navigation }) {
                 {open ? (
                     <Modal isVisible={open} onBackdropPress={() => setOpen(false)}>
                         <SafeAreaView style={{ backgroundColor: '#121212', borderRadius: 5, justifyContent: 'center', alignItems: 'center' }}>
-                            <ScrollView style={{ width: '100%' }}>
+                            <ScrollView style={{ width: '100%', height: 300 }}>
                                 <View style={{ width: '100%', alignItems: 'center', justifyContent: 'center' }}>
-                                    {allGenres.map(genre => {
+                                    {selectedItems.map((item) => {
                                         return (
-                                            <TouchableOpacity key={genre} 
-                                            style={[{ width: '75%', borderRadius: 10, alignItems: 'center' }, test ? {borderColor: 'white', borderStyle: 'solid', borderWidth: 2, marginTop: 10} : null]}
-                                            onPress={() => setTest(!test)}
+                                            <TouchableOpacity key={item.id}
+                                                style={[{ width: '75%', borderRadius: 10, justifyContent: 'center', alignItems: 'center', flexDirection: 'row', marginTop: '2%' }]}
+                                                onPress={() => handleGenres(item.id)}
                                             >
-                                                <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 25 }}>{genre}</Text>
+                                                {item.isChecked ? (
+                                                    <FontAwesome5 name="check" size={20} color="white" style={{ right: 10 }} />
+                                                ) : null}
+                                                <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 25 }}>{item.genre}</Text>
                                             </TouchableOpacity>
                                         )
                                     })}
