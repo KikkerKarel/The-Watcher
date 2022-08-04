@@ -1,21 +1,12 @@
 import { SafeAreaView, ScrollView, Text,TouchableOpacity, View } from "react-native";
 import Modal from "react-native-modal";
 import { FontAwesome5 } from '@expo/vector-icons';
-import { allGenres } from "../../../utils/lists";
-import React, { useEffect } from "react";
+import React from "react";
+import { styles } from "../ModalStyles";
 
 const EpModal = (props) => {
 
     const [genres, changeGenres] = React.useState([]);
-
-    // useEffect(() => {
-    //     loadOnlyOnce();
-    // }, [props]);
-
-    // const loadOnlyOnce = async () => {
-    //     changeGenres(props.genres);
-    // }
-
 
     const handleGenres = (id) => {
         let temp = props.selectedItems.map((item) => {
@@ -49,24 +40,24 @@ const EpModal = (props) => {
 
     return (
         <Modal {...props}>
-            <SafeAreaView style={{ backgroundColor: '#121212', borderRadius: 5, justifyContent: 'center', alignItems: 'center' }}>
-                <ScrollView style={{ width: '100%', height: 300 }}>
+            <SafeAreaView style={styles.container}>
+                <ScrollView style={{ width: '100%', height: 350 }}>
                     <View style={{ width: '100%', alignItems: 'center', justifyContent: 'center' }}>
                         {props.selectedItems.map((item) => {
                             return (
-                                <TouchableOpacity key={item.id}
-                                    style={[{ width: '75%', borderRadius: 10, justifyContent: 'center', alignItems: 'center', flexDirection: 'row', marginTop: '2%' }]}
+                                <TouchableOpacity  key={item.id}
+                                    style={[styles.genreItem, item.isChecked ? ({ backgroundColor: '#4A0000' }) : null]}
                                     onPress={() => handleGenres(item.id)}
                                 >
                                     {item.isChecked ? (
-                                        <FontAwesome5 name="check" size={20} color="white" style={{ right: 10 }} />
+                                        <FontAwesome5 name="check" size={10} color="white" style={{ right: 10 }} />
                                     ) : null}
-                                    <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 25 }}>{item.genre}</Text>
+                                    <Text style={[styles.text, { marginTop: 0 }]}>{item.genre}</Text>
                                 </TouchableOpacity>
                             )
                         })}
                         <TouchableOpacity onPress={handleConfirmGenres}>
-                            <Text style={{ color: 'white', fontSize: 25, fontWeight: 'bold', marginTop: '5%'}}>Confirm</Text>
+                            <Text style={{ color: 'white', fontSize: 25, fontWeight: 'bold', marginTop: '15%', bottom: 25}}>Confirm</Text>
                         </TouchableOpacity>
                     </View>
                 </ScrollView>

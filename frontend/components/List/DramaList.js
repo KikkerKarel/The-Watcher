@@ -76,7 +76,7 @@ export default function ListScreen() {
                     <Text style={styles.text}>Country: {key.country}</Text>
                     <Text style={styles.text}>Episodes: {key.episodes}</Text>
                     <Text style={styles.text}>Duration: {key.duration} min</Text>
-                    <Text style={styles.text}>Genre(s): {key.genres}</Text>
+                    <Text style={styles.text}>Genre(s): {key.genres.split(',').join(', ')}</Text>
                 </View>
                 <View style={{ flex: 0.5, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                     <TouchableOpacity style={{ right: 20, flexDirection: 'row' }} onPress={() => toggleModal(props.id)}>

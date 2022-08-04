@@ -182,7 +182,6 @@ export default function AddEvent({ navigation }) {
                     })}
                 </Picker>
 
-
                 <TouchableOpacity style={[styles.button, { flexDirection: "row" }]} onPress={AddToList}>
                     {loading ? (
                         <Animated.Text style={{ transform: [{ rotate: spinning }], right: 10 }}>

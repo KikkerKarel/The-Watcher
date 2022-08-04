@@ -31,4 +31,13 @@ export const styles = StyleSheet.create({
         borderRadius: 5,
         justifyContent: 'center',
     },
+    genreItem: {
+        width: '40%',
+        height: 30, 
+        borderRadius: 10, 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        flexDirection: 'row', 
+        marginTop: '2%'
+    },
 });
