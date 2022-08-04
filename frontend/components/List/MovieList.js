@@ -6,7 +6,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useIsFocused } from "@react-navigation/native";
 import AuthService from "../../authentication/Auth.Service";
 import { AntDesign } from '@expo/vector-icons';
-import Popup from "../Modal/Popup";
+import Popup from "../Modal/List/Popup";
 import { countries } from "../../utils/lists";
 
 // const wait = (timeout) => {

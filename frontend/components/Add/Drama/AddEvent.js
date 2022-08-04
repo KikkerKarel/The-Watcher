@@ -1,18 +1,19 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Alert, Animated, Easing, FlatList, SafeAreaView, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
+import React, { useEffect, useRef } from "react";
+import { Alert, Animated, Easing, SafeAreaView, Text, TextInput, TouchableOpacity, View } from "react-native";
 import axios from "axios";
 import { Picker } from "@react-native-picker/picker";
 import { styles } from "../AddEventStyles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { AntDesign, Octicons, FontAwesome5 } from '@expo/vector-icons';
+import { AntDesign, Octicons } from '@expo/vector-icons';
 import { countries, scoreList, epValue, allGenres } from "../../../utils/lists";
-import Modal from "react-native-modal";
+import EpModal from "../../Modal/Add/EpisodesModal";
 
 export default function AddEvent({ navigation }) {
 
     const [spinValue, setSpinValue] = React.useState(new Animated.Value(0));
     const [open, setOpen] = React.useState(false);
+    const [selectedItems, setSelectedItems] = React.useState(allGenres);
 
     useEffect(() => {
         loadOnlyOnce();
@@ -89,36 +90,6 @@ export default function AddEvent({ navigation }) {
         outputRange: ['0deg', '360deg']
     });
 
-    const [selectedItems, setSelectedItems] = useState(allGenres);
-    const handleGenres = (id) => {
-        let temp = selectedItems.map((item) => {
-            if (id === item.id) {
-                return { ...item, isChecked: !item.isChecked };
-            }
-            return item;
-        });
-        setSelectedItems(temp);
-    };
-
-    const handleConfirmGenres = () => {
-        var list = genres;
-        selectedItems.map((item) => {
-            if (item.isChecked) {
-                const check = !!list.find(x => x === item.genre);
-                if (!check) {
-                    list.push(item.genre);
-                }
-            } else {
-                var index = genres.indexOf(item.genre);
-                if (index !== -1) {
-                    genres.splice(index, 1);
-                }
-            }
-        });
-        changeGenres(list);
-        setOpen(false);
-    }
-
     return (
         <SafeAreaView style={styles.container}>
             <KeyboardAwareScrollView contentContainerStyle={{ alignItems: 'center', justifyContent: 'center' }} keyboardDismissMode="on-drag" resetScrollToCoords={{ x: 0, y: 0 }}>
@@ -179,39 +150,23 @@ export default function AddEvent({ navigation }) {
                 <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', width: '75%', flexWrap: 'wrap' }}>
                     {genres.map((genre) => {
                         return (
-                            <View style={{ flexDirection: 'row', marginTop: '5%', alignItems: 'center' }}>
-                                <Octicons name="dot-fill" size={15} style={{ marginRight: 2}} color="white" />
-                                <Text key={genre} style={styles.selectedGenres}>{genre}</Text>
+                            <View key={genre} style={{ flexDirection: 'row', marginTop: '5%', alignItems: 'center' }}>
+                                <Octicons name="dot-fill" size={15} style={{ marginRight: 2 }} color="white" />
+                                <Text style={styles.selectedGenres}>{genre}</Text>
                             </View>
                         )
                     })}
                 </View>
 
                 {open ? (
-                    <Modal isVisible={open} onBackdropPress={() => setOpen(false)}>
-                        <SafeAreaView style={{ backgroundColor: '#121212', borderRadius: 5, justifyContent: 'center', alignItems: 'center' }}>
-                            <ScrollView style={{ width: '100%', height: 300 }}>
-                                <View style={{ width: '100%', alignItems: 'center', justifyContent: 'center' }}>
-                                    {selectedItems.map((item) => {
-                                        return (
-                                            <TouchableOpacity key={item.id}
-                                                style={[{ width: '75%', borderRadius: 10, justifyContent: 'center', alignItems: 'center', flexDirection: 'row', marginTop: '2%' }]}
-                                                onPress={() => handleGenres(item.id)}
-                                            >
-                                                {item.isChecked ? (
-                                                    <FontAwesome5 name="check" size={20} color="white" style={{ right: 10 }} />
-                                                ) : null}
-                                                <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 25 }}>{item.genre}</Text>
-                                            </TouchableOpacity>
-                                        )
-                                    })}
-                                    <TouchableOpacity onPress={handleConfirmGenres}>
-                                        <Text style={styles.text}>Confirm</Text>
-                                    </TouchableOpacity>
-                                </View>
-                            </ScrollView>
-                        </SafeAreaView>
-                    </Modal>
+                    <EpModal
+                        genreList={changeGenres}
+                        selectedItems={selectedItems}
+                        setSelectedItems={setSelectedItems}
+                        toggle={setOpen}
+                        isVisible={open}
+                        onBackdropPress={() => setOpen(false)}
+                    />
                 ) : null}
 
                 <Text style={styles.text}>Score</Text>

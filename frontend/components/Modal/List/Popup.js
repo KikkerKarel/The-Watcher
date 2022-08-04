@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import Modal from "react-native-modal";
 import { View, Text, TextInput, Button, SafeAreaView, TouchableOpacity, Alert } from "react-native";
-import { styles } from "./ModalStyles";
+import { styles } from "../ModalStyles";
 import { Picker } from "@react-native-picker/picker";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { MaterialIcons } from '@expo/vector-icons';
 import axios from 'axios';
-import { scoreList } from "../../utils/lists";
+import { scoreList } from "../../../utils/lists";
 
 const Popup = (props) => {
 

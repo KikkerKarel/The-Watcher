@@ -1,12 +1,12 @@
 import axios from "axios";
 import React, { useEffect } from "react";
-import { View, Text, ScrollView, SafeAreaView, TouchableOpacity, RefreshControl, Button, TextInput } from "react-native";
+import { View, Text, ScrollView, SafeAreaView, TouchableOpacity, RefreshControl } from "react-native";
 import { styles } from "./ListStyles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useIsFocused } from "@react-navigation/native";
 import AuthService from "../../authentication/Auth.Service";
 import { AntDesign } from '@expo/vector-icons';
-import Popup from "../Modal/Popup";
+import Popup from "../Modal/List/Popup";
 import { countries } from "../../utils/lists";
 
 // const wait = (timeout) => {
