@@ -2,6 +2,7 @@ const Drama = require('../model/drama');
 const catchAsync = require('../util/catchAsync');
 const IDrama = require('../interface/IDrama');
 const User = require('../model/user');
+const Progress = require('../model/progress');
 
 exports.getDrama = catchAsync(async(req, res, next) => {
 
@@ -49,3 +50,16 @@ exports.addDrama = catchAsync(async(req, res, next) => {
         payload: result
     });
 });
+
+exports.updateProgress = catchAsync(async(req, res, next) => {
+
+    const newDrama = new Drama(req.params.id);
+    const newProgress = new Progress(req.body.progress);
+
+    var result = await IDrama.updateProgress(newDrama, newProgress);
+
+    res.status(200).send({
+        success: true,
+        payload: result
+    });
+})

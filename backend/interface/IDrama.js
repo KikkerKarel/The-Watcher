@@ -47,3 +47,15 @@ exports.addDrama = async (user, drama) => {
 
     return result;
 }
+
+exports.updateProgress = async (drama, episode) => {
+
+    const id = parseInt(drama.Id);
+    const result = await request.query(`IF NOT EXISTS
+    (SELECT progress FROM Drama WHERE Id='${id}')
+        INSERT INTO Drama (progress) VALUES ('${episode.progress}')
+    ELSE
+        UPDATE Drama SET progress = '${episode.progress}' WHERE Id='${id}'`);
+
+    return result;
+}
