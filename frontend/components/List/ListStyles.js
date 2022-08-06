@@ -51,7 +51,7 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
     },
     rowHeight: {
-        height: 60
+        height: 60,
     },
     tableText: {
         color: '#E5E4E2',
@@ -65,4 +65,10 @@ export const styles = StyleSheet.create({
         width: '20%',
         textAlign: 'center'
     },
+    progressBar: {
+        left: 10, 
+        height: 10, 
+        borderRadius: 2,
+        top: 5
+    }
 });

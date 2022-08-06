@@ -42,6 +42,7 @@ exports.addDrama = catchAsync(async(req, res, next) => {
 
     const newUser = new User(req.params.userId);
     const newDrama = new Drama(null, req.body.title, req.body.country, req.body.episodes, req.body.duration, req.body.genres, req.body.score);
+    // const newProgress = new Progress(req.body.progress);
 
     var result = await IDrama.addDrama(newUser, newDrama);
 

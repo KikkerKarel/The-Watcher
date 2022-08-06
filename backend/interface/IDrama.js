@@ -42,8 +42,8 @@ exports.getDramasByUserId = async (user) => {
 exports.addDrama = async (user, drama) => {
 
     const userId = parseInt(user.userId);
-    const result = await request.query(`INSERT INTO Drama (userId, title, country, episodes, duration, genres, score) 
-    VALUES ('${userId}','${drama.title}','${drama.country}','${drama.episodes}','${drama.duration}','${drama.genres}', '${drama.score}')`);
+    const result = await request.query(`INSERT INTO Drama (userId, title, country, episodes, duration, genres, score, progress) 
+    VALUES ('${userId}','${drama.title}','${drama.country}','${drama.episodes}','${drama.duration}','${drama.genres}', '${drama.score}', '0')`);
 
     return result;
 }

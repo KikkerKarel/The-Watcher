@@ -21,6 +21,7 @@ const Popup = (props) => {
     const [duration, changeDuration] = React.useState();
     const [genres, changeGenres] = React.useState([]);
     const [selectedValue, setSelectedValue] = React.useState(0);
+    const [progress, setProgress] = React.useState(0);
 
     useEffect(() => {
         loadOnlyOnce();
@@ -36,6 +37,7 @@ const Popup = (props) => {
         const splitGenres = props.entry.genres.split(',');
         changeGenres(splitGenres);
         setSelectedValue(props.entry.score);
+        setProgress(props.entry.progress);
     }
 
     const [more, setMore] = React.useState(false);
@@ -75,7 +77,7 @@ const Popup = (props) => {
                 console.log(err);
             });
         }
-        
+
     }
 
     return (
@@ -120,11 +122,18 @@ const Popup = (props) => {
                                     return (
                                         <View key={genre} style={{ flexDirection: 'row', marginTop: '5%', alignItems: 'center' }}>
                                             <Octicons name="dot-fill" size={15} style={{ marginRight: 2 }} color="white" />
-                                            <Text style={{ fontSize: 15, color: '#fff'}}>{genre}</Text>
+                                            <Text style={{ fontSize: 15, color: '#fff' }}>{genre}</Text>
                                         </View>
                                     )
                                 })}
                             </View>
+                            {props.listType === "drama" ? (
+                                <View style={{ width: '75%', alignItems: 'center' }}>
+                                    <Text style={styles.text}>Progress</Text>
+                                    <TextInput style={styles.textInput} onChangeText={setProgress} value={progress.toString()} />
+                                </View>
+                            ) : null}
+
                             {open ? (
                                 <GenreModal
                                     genreList={changeGenres}

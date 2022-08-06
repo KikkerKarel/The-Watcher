@@ -34,4 +34,5 @@ export const allGenres = [
     { id: 10, genre: 'Youth', isChecked: false },
     { id: 11, genre: 'Mystery', isChecked: false },
     { id: 12, genre: 'School', isChecked: false },
+    { id: 13, genre: 'Crime', isChecked: false },
 ];
