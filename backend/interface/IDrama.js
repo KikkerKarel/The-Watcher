@@ -11,7 +11,7 @@ exports.getDrama = async () => {
     return dramas[0];
 }
 
-exports.updateDramaById = async (drama) => {
+exports.updateDramaById = async (drama, progress) => {
 
     const result = (await request.query(`UPDATE Drama SET 
     title = '${drama.title}', 
@@ -19,7 +19,8 @@ exports.updateDramaById = async (drama) => {
     episodes = '${drama.episodes}', 
     duration = '${drama.duration}', 
     genres = '${drama.genres}', 
-    score = '${drama.score}' 
+    score = '${drama.score}',
+    progress = '${progress.progress}' 
     WHERE Id='${parseInt(drama.Id)}'`));
 
     console.log(result);

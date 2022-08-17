@@ -54,7 +54,8 @@ const Popup = (props) => {
                 episodes: parseInt(episodes),
                 duration: parseInt(duration),
                 genres: genres,
-                score: selectedValue
+                score: selectedValue,
+                progress: progress
             });
             await axios.put(`/drama/update/${props.entry.Id}`, json, { headers: { 'Content-Type': 'application/json' } }).then(() => {
                 Alert.alert("Entry has been updated", "Please refresh the page");

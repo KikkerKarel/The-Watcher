@@ -17,8 +17,9 @@ exports.getDrama = catchAsync(async(req, res, next) => {
 exports.updateDramaById = catchAsync(async(req, res, next) => {
     
     const newDrama = new Drama(req.params.id, req.body.title, req.body.country, req.body.episodes, req.body.duration, req.body.genres, req.body.score);
+    const newProgress = new Progress(req.body.progress);
 
-    var result = await IDrama.updateDramaById(newDrama);
+    var result = await IDrama.updateDramaById(newDrama, newProgress);
 
     res.status(200).send({
         success: true,

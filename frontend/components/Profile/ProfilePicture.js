@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import * as ImagePicker from 'expo-image-picker';
-import { Alert, Image, TouchableOpacity } from 'react-native';
+import { Alert, Image, Platform, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -31,8 +31,18 @@ const ProfilePicture = (props) => {
             quality: 1,
         });
 
+        // console.log(result);
+
+        // const data = new FormData();
+        // data.append('profile picture', {
+        //     type: result.type,
+        //     uri: Platform.OS === 'ios' ? result.uri.replace('file://', '') : result.uri,
+        // });
+
+        // console.log(data);
+
         if (!result.cancelled) {
-            const newUri = result.uri.replace('file://', '');
+            const newUri = Platform.OS === 'ios' ? result.uri.replace('file://', '') : result.uri;
             const userId = await AsyncStorage.getItem('userId');
             const json = JSON.stringify({
                 imageUri: newUri

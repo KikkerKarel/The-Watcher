@@ -31,11 +31,11 @@ export default function ProfileScreen({ navigation }) {
                 setUsername(response);
             });
             const userId = await AsyncStorage.getItem("userId");
-            axios.get(`/user/image/get/${userId}`).then(response => {
-                setProfilePicture(response.data.payload.profilePicture);
-            }).catch(err => {
-                console.log(err);
-            });
+            // axios.get(`/user/image/get/${userId}`).then(response => {
+            //     setProfilePicture(response.data.payload.profilePicture);
+            // }).catch(err => {
+            //     console.log(err);
+            // });
 
             await axios.get(`/drama/get/${userId}`).then(response => {
                 setDramas(response.data.payload);
@@ -55,6 +55,21 @@ export default function ProfileScreen({ navigation }) {
         });
         for (var i = 0; i < eps.length; i++) {
             sum += eps[i];
+        }
+
+        return (
+            <Text style={[styles.statsText, { left: 20 }]}>{sum}</Text>
+        )
+    }
+
+    const WatchedEps = () => {
+        let sum = 0;
+        var watched = [];
+        dramas.forEach(item => {
+            watched.push(item.progress);
+        });
+        for (var i = 0; i < watched.length; i++) {
+            sum += watched[i];
         }
 
         return (
@@ -129,13 +144,17 @@ export default function ProfileScreen({ navigation }) {
                     </View>
                     <View style={styles.statsBody}>
                         <View style={styles.statsTextBody}>
-                            <View style={{ flexDirection: 'row', flex: 0.5, alignItems: 'center' }}>
+                            <View style={{ flexDirection: 'row', flex: 0.2, alignItems: 'center' }}>
                                 <Text style={styles.statsText}>Total dramas:</Text>
                                 <Text style={[styles.statsText, { left: 20 }]}>{dramas.length}</Text>
                             </View>
-                            <View style={{ flexDirection: 'row', flex: 0.5 }}>
+                            <View style={{ flexDirection: 'row', flex: 0.2 }}>
                                 <Text style={[styles.statsText,]}>Total episodes:</Text>
                                 <Total />
+                            </View>
+                            <View style={{ flexDirection: 'row', flex: 0.2 }}>
+                                <Text style={[styles.statsText,]}>Total episodes watched:</Text>
+                                <WatchedEps />
                             </View>
                         </View>
 
